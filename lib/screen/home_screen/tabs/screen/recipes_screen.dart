@@ -1,44 +1,17 @@
 import 'package:fitness_app_bloc/config/config.dart';
-import 'package:fitness_app_bloc/data/local/prefs.dart';
+
 import 'package:fitness_app_bloc/screen/home_screen/tabs/bloc/bloc/recipes_toggle_bloc.dart';
 import 'package:fitness_app_bloc/screen/home_screen/tabs/widget/recipes/calories.dart';
 import 'package:fitness_app_bloc/screen/home_screen/tabs/widget/recipes/water.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 class RecipesScreen extends StatelessWidget {
   const RecipesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final dateTime = DateTime.now();
-    if (LocalPref.getString(AppString.dateTime) == null) {
-      LocalPref.setString(AppString.dateTime, dateTime.toString());
-      LocalPref.setInt(AppString.calories, 0);
-      LocalPref.setInt(AppString.protein, 0);
-      LocalPref.setInt(AppString.fats, 0);
-      LocalPref.setInt(AppString.carbs, 0);
-      LocalPref.setInt(AppString.water, 0);
-      for (int i = 0; i < 24; i++) {
-        LocalPref.setInt(i.toString(), 0);
-      }
-    } else {
-      if (DateFormat('dd-M-yyyy').format(
-              DateTime.parse(LocalPref.getString(AppString.dateTime)!)) !=
-          DateFormat('dd-M-yyyy').format(dateTime)) {
-        LocalPref.setString(AppString.dateTime, dateTime.toString());
-        LocalPref.setInt(AppString.calories, 0);
-        LocalPref.setInt(AppString.protein, 0);
-        LocalPref.setInt(AppString.fats, 0);
-        LocalPref.setInt(AppString.carbs, 0);
-        LocalPref.setInt(AppString.water, 0);
-      }
-      for (int i = 0; i < 24; i++) {
-        LocalPref.setInt(i.toString(), 0);
-      }
-    }
-
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: AppColor.whiteColor,

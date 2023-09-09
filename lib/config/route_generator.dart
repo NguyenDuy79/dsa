@@ -3,6 +3,9 @@ import 'package:fitness_app_bloc/screen/home_screen/page/action_screen.dart';
 
 import 'package:fitness_app_bloc/common_app/ticker.dart';
 import 'package:fitness_app_bloc/screen/home_screen/page/add_information.dart';
+import 'package:fitness_app_bloc/screen/home_screen/page/add_meals_screen.dart';
+import 'package:fitness_app_bloc/screen/home_screen/page/bloc/bloc_add_meals/add_meals_bloc.dart';
+
 import 'package:fitness_app_bloc/screen/home_screen/page/detail_history.dart';
 import 'package:fitness_app_bloc/screen/home_screen/page/detail_informatton_screen.dart';
 import 'package:fitness_app_bloc/screen/home_screen/page/history_screen.dart';
@@ -35,6 +38,7 @@ class RouteGenerator {
   static const detailInformation = '/detail-information';
   static const historyScreen = '/history-screen';
   static const detailHistoryScreen = '/detail-history-screen';
+  static const addMealsScreen = '/add-meals-screen';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -122,6 +126,13 @@ class RouteGenerator {
           builder: (context) => BlocProvider(
             create: (context) => HomePageBloc(),
             child: DetailHistoryScreen(args),
+          ),
+        );
+      case addMealsScreen:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => AddMealsBloc(),
+            child: const AddMealsScreen(),
           ),
         );
       default:

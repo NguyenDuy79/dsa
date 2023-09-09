@@ -35,12 +35,6 @@ class DbHelper {
           '${AppString.weight} TEXT NOT NULL,'
           '${AppString.timeAtSet} TEXT NOT NULL,'
           '${AppString.rep} TEXT NOT NULL)');
-      await db.execute('CREATE TABLE ${AppString.recipesTable}('
-          '${AppString.id}  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'
-          '${AppString.calories} TEXT NOT NULL,'
-          '${AppString.protein} TEXT NOT NULL,'
-          '${AppString.fats} TEXT NOT NULL,'
-          '${AppString.carbs} TEXT NOT NULL)');
     }, version: 1);
   }
 
@@ -54,6 +48,9 @@ class DbHelper {
 
   Future<void> insert(String table, Map<String, Object> data) async {
     final sqlDb = await DbHelper().database();
-    sqlDb.insert(table, data, conflictAlgorithm: ConflictAlgorithm.replace);
+    sqlDb.insert(
+      table,
+      data,
+    );
   }
 }

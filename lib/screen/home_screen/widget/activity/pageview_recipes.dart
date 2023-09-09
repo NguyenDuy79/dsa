@@ -50,6 +50,7 @@ class PageViewRecipesWidget extends StatelessWidget {
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Stack(
+                                        alignment: Alignment.center,
                                         children: [
                                           Center(
                                             child: SizedBox(
@@ -65,7 +66,7 @@ class PageViewRecipesWidget extends StatelessWidget {
                                                       .orangeColor1
                                                       .withOpacity(0.2),
                                                   color: AppColor.orangeColor1,
-                                                  value: LocalPref.getInt(
+                                                  value: LocalPref.getDouble(
                                                               AppString
                                                                   .protein) ==
                                                           null
@@ -75,7 +76,7 @@ class PageViewRecipesWidget extends StatelessWidget {
                                                                   as String) ==
                                                               0.0
                                                           ? 0
-                                                          : LocalPref.getInt(
+                                                          : LocalPref.getDouble(
                                                                   AppString
                                                                       .protein)! /
                                                               double.parse(
@@ -88,20 +89,22 @@ class PageViewRecipesWidget extends StatelessWidget {
                                             ),
                                           ),
                                           SizedBox(
-                                            height: AppDimens.dimens_35,
-                                            width: AppDimens.dimens_35,
+                                            height: AppDimens.dimens_30,
+                                            width: AppDimens.dimens_30,
                                             child: Center(
                                               child: Text(
-                                                LocalPref.getInt(AppString
+                                                LocalPref.getDouble(AppString
                                                             .protein) !=
                                                         null
-                                                    ? LocalPref.getInt(
-                                                            AppString.protein)
-                                                        .toString()
+                                                    ? AppAnother.filterDouble(
+                                                        LocalPref.getDouble(
+                                                                AppString
+                                                                    .protein)!
+                                                            .toStringAsFixed(1))
                                                     : '0',
                                                 style:
                                                     AppAnother.textStyleDefault(
-                                                        AppDimens.dimens_15,
+                                                        AppDimens.dimens_11,
                                                         AppFont.medium,
                                                         AppColor.blackColor),
                                               ),
@@ -141,6 +144,7 @@ class PageViewRecipesWidget extends StatelessWidget {
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Stack(
+                                        alignment: Alignment.center,
                                         children: [
                                           Center(
                                             child: SizedBox(
@@ -156,7 +160,7 @@ class PageViewRecipesWidget extends StatelessWidget {
                                                       .redColor1
                                                       .withOpacity(0.2),
                                                   color: AppColor.redColor1,
-                                                  value: LocalPref.getInt(
+                                                  value: LocalPref.getDouble(
                                                               AppString.fats) ==
                                                           null
                                                       ? 0
@@ -165,12 +169,12 @@ class PageViewRecipesWidget extends StatelessWidget {
                                                                   as String) ==
                                                               0.0
                                                           ? 0
-                                                          : LocalPref.getInt(
+                                                          : LocalPref.getDouble(
                                                                   AppString
                                                                       .fats)! /
-                                                              double.parse(state
-                                                                      .dataRecipes[AppString.fats]
-                                                                  as String),
+                                                              double.parse(
+                                                                  state.dataRecipes[AppString.fats]
+                                                                      as String),
                                                   strokeWidth:
                                                       AppDimens.dimens_5,
                                                 ),
@@ -178,20 +182,21 @@ class PageViewRecipesWidget extends StatelessWidget {
                                             ),
                                           ),
                                           SizedBox(
-                                            height: AppDimens.dimens_35,
-                                            width: AppDimens.dimens_35,
+                                            height: AppDimens.dimens_30,
+                                            width: AppDimens.dimens_30,
                                             child: Center(
                                               child: Text(
-                                                LocalPref.getInt(
+                                                LocalPref.getDouble(
                                                             AppString.fats) !=
                                                         null
-                                                    ? LocalPref.getInt(
-                                                            AppString.fats)
-                                                        .toString()
+                                                    ? AppAnother.filterDouble(
+                                                        LocalPref.getDouble(
+                                                                AppString.fats)!
+                                                            .toStringAsFixed(1))
                                                     : '0',
                                                 style:
                                                     AppAnother.textStyleDefault(
-                                                        AppDimens.dimens_15,
+                                                        AppDimens.dimens_11,
                                                         AppFont.medium,
                                                         AppColor.blackColor),
                                               ),
@@ -231,6 +236,7 @@ class PageViewRecipesWidget extends StatelessWidget {
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Stack(
+                                        alignment: Alignment.center,
                                         children: [
                                           Center(
                                             child: SizedBox(
@@ -246,7 +252,7 @@ class PageViewRecipesWidget extends StatelessWidget {
                                                       .yellowColor1
                                                       .withOpacity(0.2),
                                                   color: AppColor.yellowColor1,
-                                                  value: LocalPref.getInt(
+                                                  value: LocalPref.getDouble(
                                                               AppString
                                                                   .carbs) ==
                                                           null
@@ -256,12 +262,12 @@ class PageViewRecipesWidget extends StatelessWidget {
                                                                   as String) ==
                                                               0.0
                                                           ? 0
-                                                          : LocalPref.getInt(
+                                                          : LocalPref.getDouble(
                                                                   AppString
                                                                       .carbs)! /
-                                                              double.parse(state
-                                                                      .dataRecipes[AppString.carbs]
-                                                                  as String),
+                                                              double.parse(
+                                                                  state.dataRecipes[AppString.carbs]
+                                                                      as String),
                                                   strokeWidth:
                                                       AppDimens.dimens_5,
                                                 ),
@@ -269,20 +275,22 @@ class PageViewRecipesWidget extends StatelessWidget {
                                             ),
                                           ),
                                           SizedBox(
-                                            height: AppDimens.dimens_35,
-                                            width: AppDimens.dimens_35,
+                                            height: AppDimens.dimens_30,
+                                            width: AppDimens.dimens_30,
                                             child: Center(
                                               child: Text(
-                                                LocalPref.getInt(
+                                                LocalPref.getDouble(
                                                             AppString.carbs) !=
                                                         null
-                                                    ? LocalPref.getInt(
-                                                            AppString.carbs)
-                                                        .toString()
+                                                    ? AppAnother.filterDouble(
+                                                        LocalPref.getDouble(
+                                                                AppString
+                                                                    .carbs)!
+                                                            .toStringAsFixed(1))
                                                     : '0',
                                                 style:
                                                     AppAnother.textStyleDefault(
-                                                        AppDimens.dimens_15,
+                                                        AppDimens.dimens_11,
                                                         AppFont.medium,
                                                         AppColor.blackColor),
                                               ),

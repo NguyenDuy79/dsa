@@ -1,6 +1,8 @@
+import 'package:fitness_app_bloc/common_app/common_widget.dart';
 import 'package:fitness_app_bloc/common_bloc/bloc_recipes/recipes_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import '../../../../../config/config.dart';
 import '../../../../../data/local/prefs.dart';
 import '../../../../../respository/repository.dart';
@@ -36,6 +38,17 @@ class _CaloriesWidgetState extends State<CaloriesWidget> {
               child: CircularProgressIndicator(),
             );
           } else if (state is RecipesLoaded) {
+            DateTime dateTime = DateTime.now();
+            List<Map<String, Object?>> listMealsToday = [];
+            if (state.dataMeals.isNotEmpty) {
+              for (int i = 0; i < state.dataMeals.length; i++) {
+                if (state.dataMeals[i][AppString.day] ==
+                    DateFormat('dd-M-yyyy').format(dateTime)) {
+                  listMealsToday.add(state.dataMeals[i]);
+                }
+              }
+            }
+
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
@@ -51,7 +64,7 @@ class _CaloriesWidgetState extends State<CaloriesWidget> {
                             backgroundColor:
                                 AppColor.greenColor.withOpacity(0.4),
                             color: AppColor.greenColor,
-                            value: LocalPref.getInt(AppString.calories)! /
+                            value: LocalPref.getDouble(AppString.calories)! /
                                 int.parse(state.dataRecipes[AppString.calories]
                                     as String),
                             strokeWidth: AppDimens.dimens_12,
@@ -70,7 +83,9 @@ class _CaloriesWidgetState extends State<CaloriesWidget> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  '${LocalPref.getInt(AppString.calories)}',
+                                  AppAnother.filterDouble(
+                                      LocalPref.getDouble(AppString.calories)!
+                                          .toStringAsFixed(1)),
                                   style: AppAnother.textStyleDefault(
                                       AppDimens.dimens_32,
                                       AppFont.medium,
@@ -298,6 +313,7 @@ class _CaloriesWidgetState extends State<CaloriesWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Stack(
+                              alignment: Alignment.center,
                               children: [
                                 Center(
                                   child: SizedBox(
@@ -310,7 +326,7 @@ class _CaloriesWidgetState extends State<CaloriesWidget> {
                                         backgroundColor: AppColor.orangeColor1
                                             .withOpacity(0.2),
                                         color: AppColor.orangeColor1,
-                                        value: LocalPref.getInt(
+                                        value: LocalPref.getDouble(
                                                 AppString.protein)! /
                                             double.parse(state.dataRecipes[
                                                 AppString.protein] as String),
@@ -320,16 +336,20 @@ class _CaloriesWidgetState extends State<CaloriesWidget> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: AppDimens.dimens_35,
-                                  width: AppDimens.dimens_35,
+                                  height: AppDimens.dimens_30,
+                                  width: AppDimens.dimens_30,
                                   child: Center(
-                                    child: Text(
-                                      LocalPref.getInt(AppString.protein)
-                                          .toString(),
-                                      style: AppAnother.textStyleDefault(
-                                          AppDimens.dimens_15,
-                                          AppFont.medium,
-                                          AppColor.blackColor),
+                                    child: FittedBox(
+                                      child: Text(
+                                        AppAnother.filterDouble(
+                                            LocalPref.getDouble(
+                                                    AppString.protein)!
+                                                .toStringAsFixed(1)),
+                                        style: AppAnother.textStyleDefault(
+                                            AppDimens.dimens_11,
+                                            AppFont.medium,
+                                            AppColor.blackColor),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -364,6 +384,7 @@ class _CaloriesWidgetState extends State<CaloriesWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Stack(
+                              alignment: Alignment.center,
                               children: [
                                 Center(
                                   child: SizedBox(
@@ -376,26 +397,30 @@ class _CaloriesWidgetState extends State<CaloriesWidget> {
                                         backgroundColor:
                                             AppColor.redColor1.withOpacity(0.2),
                                         color: AppColor.redColor1,
-                                        value:
-                                            LocalPref.getInt(AppString.fats)! /
-                                                double.parse(state.dataRecipes[
-                                                    AppString.fats] as String),
+                                        value: LocalPref.getDouble(
+                                                AppString.fats)! /
+                                            double.parse(state
+                                                    .dataRecipes[AppString.fats]
+                                                as String),
                                         strokeWidth: AppDimens.dimens_5,
                                       ),
                                     ),
                                   ),
                                 ),
                                 SizedBox(
-                                  height: AppDimens.dimens_35,
-                                  width: AppDimens.dimens_35,
+                                  height: AppDimens.dimens_30,
+                                  width: AppDimens.dimens_30,
                                   child: Center(
-                                    child: Text(
-                                      LocalPref.getInt(AppString.fats)
-                                          .toString(),
-                                      style: AppAnother.textStyleDefault(
-                                          AppDimens.dimens_15,
-                                          AppFont.medium,
-                                          AppColor.blackColor),
+                                    child: FittedBox(
+                                      child: Text(
+                                        AppAnother.filterDouble(
+                                            LocalPref.getDouble(AppString.fats)!
+                                                .toStringAsFixed(1)),
+                                        style: AppAnother.textStyleDefault(
+                                            AppDimens.dimens_11,
+                                            AppFont.medium,
+                                            AppColor.blackColor),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -430,6 +455,7 @@ class _CaloriesWidgetState extends State<CaloriesWidget> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Stack(
+                              alignment: Alignment.center,
                               children: [
                                 Center(
                                   child: SizedBox(
@@ -442,26 +468,30 @@ class _CaloriesWidgetState extends State<CaloriesWidget> {
                                         backgroundColor: AppColor.yellowColor1
                                             .withOpacity(0.2),
                                         color: AppColor.yellowColor1,
-                                        value:
-                                            LocalPref.getInt(AppString.carbs)! /
-                                                double.parse(state.dataRecipes[
-                                                    AppString.carbs] as String),
+                                        value: LocalPref.getDouble(
+                                                AppString.carbs)! /
+                                            double.parse(state.dataRecipes[
+                                                AppString.carbs] as String),
                                         strokeWidth: AppDimens.dimens_5,
                                       ),
                                     ),
                                   ),
                                 ),
                                 SizedBox(
-                                  height: AppDimens.dimens_35,
-                                  width: AppDimens.dimens_35,
+                                  height: AppDimens.dimens_30,
+                                  width: AppDimens.dimens_30,
                                   child: Center(
-                                    child: Text(
-                                      LocalPref.getInt(AppString.carbs)
-                                          .toString(),
-                                      style: AppAnother.textStyleDefault(
-                                          AppDimens.dimens_15,
-                                          AppFont.medium,
-                                          AppColor.blackColor),
+                                    child: FittedBox(
+                                      child: Text(
+                                        AppAnother.filterDouble(
+                                            LocalPref.getDouble(
+                                                    AppString.carbs)!
+                                                .toStringAsFixed(1)),
+                                        style: AppAnother.textStyleDefault(
+                                            AppDimens.dimens_11,
+                                            AppFont.medium,
+                                            AppColor.blackColor),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -493,6 +523,106 @@ class _CaloriesWidgetState extends State<CaloriesWidget> {
                           ],
                         ),
                       ],
+                    ),
+                  ),
+                Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: AppDimens.dimens_20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Meals Today',
+                          style: AppAnother.textStyleDefault(
+                              AppDimens.dimens_20,
+                              AppFont.semiBold,
+                              AppColor.blackColor),
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              if (state.dataRecipes[AppString.carbs] == '0') {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    CommonWidget.errorSnackBar(
+                                        'Please add protein and fats'));
+                              } else {
+                                Navigator.of(context)
+                                    .pushNamed(RouteGenerator.addMealsScreen);
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.add,
+                                  color: AppColor.blue1.withOpacity(0.7),
+                                ),
+                                Text(
+                                  'Add meals',
+                                  style: AppAnother.textStyleDefault(
+                                      AppDimens.dimens_20,
+                                      AppFont.semiBold,
+                                      AppColor.blue1.withOpacity(0.7)),
+                                )
+                              ],
+                            ))
+                      ],
+                    )),
+                if (listMealsToday.isEmpty)
+                  Text('Empty',
+                      style: AppAnother.textStyleDefault(AppDimens.dimens_25,
+                          AppFont.semiBold, AppColor.blackColor)),
+                if (listMealsToday.isNotEmpty)
+                  SizedBox(
+                    height: listMealsToday.length * AppDimens.dimens_50,
+                    width: double.infinity,
+                    child: ListView.builder(
+                      itemCount: listMealsToday.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: AppDimens.dimens_20,
+                              vertical: AppDimens.dimens_5),
+                          child: FittedBox(
+                            child: Row(children: [
+                              SizedBox(
+                                width: AppDimens.dimens_70,
+                                child: Text(
+                                  '${AppString.meals}: ${index + 1}',
+                                  style: AppAnother.textStyleDefault(
+                                      AppDimens.dimens_15,
+                                      AppFont.medium,
+                                      AppColor.blackColor),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: AppDimens.dimens_20,
+                              ),
+                              SizedBox(
+                                width: AppDimens.dimens_120,
+                                child: Text(
+                                  '${AppString.hour}: ${listMealsToday[index][AppString.hour]}',
+                                  style: AppAnother.textStyleDefault(
+                                      AppDimens.dimens_15,
+                                      AppFont.medium,
+                                      AppColor.blackColor),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: AppDimens.dimens_20,
+                              ),
+                              SizedBox(
+                                width: AppDimens.dimens_120,
+                                child: Text(
+                                  '${AppString.calories}: ${double.parse(listMealsToday[index][AppString.calories] as String).toStringAsFixed(1)}',
+                                  style: AppAnother.textStyleDefault(
+                                      AppDimens.dimens_15,
+                                      AppFont.medium,
+                                      AppColor.blackColor),
+                                ),
+                              ),
+                            ]),
+                          ),
+                        );
+                      },
                     ),
                   )
               ],

@@ -1,3 +1,4 @@
+import 'package:fitness_app_bloc/common_bloc/bloc_recipes/recipes_bloc.dart';
 import 'package:fitness_app_bloc/config/app_another.dart';
 import 'package:fitness_app_bloc/config/app_color.dart';
 import 'package:fitness_app_bloc/config/app_dimens.dart';
@@ -8,6 +9,7 @@ import 'package:fitness_app_bloc/screen/home_screen/widget/activity/gridview_act
 import 'package:fitness_app_bloc/screen/home_screen/widget/activity/pageview_action.dart';
 import 'package:fitness_app_bloc/screen/home_screen/widget/activity/pageview_recipes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ActivityScreen extends StatelessWidget {
   const ActivityScreen({super.key});
@@ -34,15 +36,20 @@ class ActivityScreen extends StatelessWidget {
             centerTitle: true,
             actions: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () async {},
                   icon: const Icon(
                     Icons.notifications_outlined,
                     color: AppColor.blackColor,
                   )),
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.calendar_month_rounded,
-                      color: AppColor.blackColor))
+              BlocConsumer<RecipesBloc, RecipesState>(
+                listener: (context, state) {},
+                builder: (context, state) {
+                  return IconButton(
+                      onPressed: () async {},
+                      icon: const Icon(Icons.calendar_month_rounded,
+                          color: AppColor.blackColor));
+                },
+              )
             ],
           ),
           body: SingleChildScrollView(

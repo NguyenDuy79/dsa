@@ -5,4 +5,5 @@ class AppRepository {
   static final dbInformationRepository = DbInformationRespository();
   static final dbHistoryRespository = DbHistoryRepository();
   static final dbRecipesRespository = DbRecipesRepository();
+  static final dbMealsRepository = DbMealsRepository();
 }

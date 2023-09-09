@@ -1,9 +1,11 @@
 import 'package:fitness_app_bloc/common_bloc/bloc_activity/activity_bloc.dart';
 import 'package:fitness_app_bloc/common_bloc/bloc_application/application_bloc.dart';
 import 'package:fitness_app_bloc/common_bloc/bloc_history/history_bloc.dart';
+
 import 'package:fitness_app_bloc/common_bloc/bloc_recipes/recipes_bloc.dart';
 
 import 'package:fitness_app_bloc/respository/app_repository.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CommonBloc {
@@ -15,6 +17,7 @@ class CommonBloc {
   static final recipesBloc =
       RecipesBloc(recipesRepository: AppRepository.dbRecipesRespository);
   static final applicationBloc = ApplicationBloc();
+
   static final List<BlocProvider> blocProviders = [
     BlocProvider<ActivityBloc>(create: (context) => activityBloc),
     BlocProvider<HistoryBloc>(
@@ -23,9 +26,9 @@ class CommonBloc {
     BlocProvider<RecipesBloc>(
       create: (context) => recipesBloc,
     ),
-    BlocProvider(
+    BlocProvider<ApplicationBloc>(
       create: (context) => applicationBloc,
-    )
+    ),
   ];
 
   static void dispose() {

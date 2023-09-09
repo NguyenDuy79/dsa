@@ -29,32 +29,18 @@ class WaterWidget extends StatelessWidget {
                   SizedBox(
                       width: (width - AppDimens.dimens_20 * 3) / 2,
                       child: Stack(
+                        alignment: Alignment.bottomCenter,
                         children: <Widget>[
                           Container(
                             alignment: Alignment.bottomCenter,
                             decoration: BoxDecoration(
-                              color: AppColor.blueColor1.withOpacity(0.8),
+                              color: AppColor.colorGrey2,
                               borderRadius:
                                   BorderRadius.circular(AppDimens.dimens_15),
                             ),
-                            child: Text(
-                              LocalPref.getInt(AppString.water)! <
-                                      (context.select((ActivityBloc bloc) =>
-                                                  bloc.state.activityResponse
-                                                          .last[
-                                                      AppString.gender]) ==
-                                              AppString.male
-                                          ? 3700
-                                          : 2700)
-                                  ? '${(LocalPref.getInt(AppString.water)! * 100 / (context.select((ActivityBloc bloc) => bloc.state.activityResponse.last[AppString.gender]) == AppString.male ? 3700 : 2700)).toStringAsFixed(1)}%'
-                                  : '100%',
-                              style: AppAnother.textStyleDefault(
-                                  AppDimens.dimens_25,
-                                  AppFont.semiBold,
-                                  AppColor.whiteColor),
-                            ),
                           ),
                           FractionallySizedBox(
+                            alignment: Alignment.bottomCenter,
                             widthFactor: 1,
                             heightFactor: LocalPref.getInt(AppString.water)! <
                                     (context.select((ActivityBloc bloc) => bloc
@@ -64,40 +50,55 @@ class WaterWidget extends StatelessWidget {
                                             AppString.male
                                         ? 3700
                                         : 2700)
-                                ? 1 -
-                                    (LocalPref.getInt(AppString.water)! /
-                                        (context.select((ActivityBloc bloc) => bloc
-                                                    .state
-                                                    .activityResponse
-                                                    .last[AppString.gender]) ==
+                                ? (LocalPref.getInt(AppString.water)! /
+                                    (context.select((ActivityBloc bloc) => bloc
+                                                .state
+                                                .activityResponse
+                                                .last[AppString.gender]) ==
+                                            AppString.male
+                                        ? 3700
+                                        : 2700))
+                                : 1,
+                            child: Container(
+                              alignment: Alignment.bottomCenter,
+                              decoration: BoxDecoration(
+                                  color: AppColor.blueColor1.withOpacity(0.8),
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: const Radius.circular(
+                                          AppDimens.dimens_15),
+                                      bottomRight: const Radius.circular(
+                                          AppDimens.dimens_15),
+                                      topLeft:
+                                          (width - AppDimens.dimens_20 * 3) * 0.75 * (LocalPref.getInt(AppString.water)! / (context.select((ActivityBloc bloc) => bloc.state.activityResponse.last[AppString.gender]) == AppString.male ? 3700 : 2700)) >= ((width - AppDimens.dimens_20 * 3) * 0.75 - AppDimens.dimens_15)
+                                              ? const Radius.circular(
+                                                  AppDimens.dimens_15)
+                                              : const Radius.circular(
+                                                  AppDimens.dimens_0),
+                                      topRight: (width - AppDimens.dimens_20 * 3) *
+                                                  0.75 *
+                                                  (LocalPref.getInt(AppString.water)! /
+                                                      (context.select((ActivityBloc bloc) => bloc.state.activityResponse.last[AppString.gender]) == AppString.male ? 3700 : 2700)) >=
+                                              ((width - AppDimens.dimens_20 * 3) * 0.75 - AppDimens.dimens_15)
+                                          ? const Radius.circular(AppDimens.dimens_15)
+                                          : const Radius.circular(AppDimens.dimens_0))),
+                              child: Text(
+                                LocalPref.getInt(AppString.water)! <
+                                        (context.select((ActivityBloc bloc) =>
+                                                    bloc.state.activityResponse
+                                                            .last[
+                                                        AppString.gender]) ==
                                                 AppString.male
                                             ? 3700
-                                            : 2700))
-                                : 0,
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: AppColor.colorGrey3,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: const Radius.circular(
-                                          AppDimens.dimens_15),
-                                      bottomRight:
-                                          LocalPref.getInt(AppString.water)! == 0
-                                              ? const Radius.circular(
-                                                  AppDimens.dimens_15)
-                                              : const Radius.circular(
-                                                  AppDimens.dimens_0),
-                                      bottomLeft:
-                                          LocalPref.getInt(AppString.water)! ==
-                                                  0
-                                              ? const Radius.circular(
-                                                  AppDimens.dimens_15)
-                                              : const Radius.circular(
-                                                  AppDimens.dimens_0),
-                                      topRight: const Radius.circular(
-                                          AppDimens.dimens_15))),
+                                            : 2700)
+                                    ? '${(LocalPref.getInt(AppString.water)! * 100 / (context.select((ActivityBloc bloc) => bloc.state.activityResponse.last[AppString.gender]) == AppString.male ? 3700 : 2700)).toStringAsFixed(1)}%'
+                                    : '100%',
+                                style: AppAnother.textStyleDefault(
+                                    AppDimens.dimens_25,
+                                    AppFont.semiBold,
+                                    AppColor.whiteColor),
+                              ),
                             ),
-                          ),
+                          )
                         ],
                       )),
                   const SizedBox(
@@ -267,16 +268,25 @@ class WaterWidget extends StatelessWidget {
             Container(
               height: AppDimens.dimens_200,
               width: double.infinity,
-              margin: const EdgeInsets.symmetric(
-                  horizontal: AppDimens.dimens_20,
+              margin:
+                  const EdgeInsets.symmetric(horizontal: AppDimens.dimens_10),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      width: AppDimens.dimens_2, color: AppColor.colorGrey3),
+                  borderRadius: BorderRadius.circular(AppDimens.dimens_10)),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: AppDimens.dimens_0,
                   vertical: AppDimens.dimens_10),
               child: SfCartesianChart(
-                primaryXAxis: CategoryAxis(),
+                primaryXAxis: CategoryAxis(
+                    autoScrollingDelta: 24,
+                    interval: 2,
+                    majorGridLines: const MajorGridLines(width: 0)),
                 primaryYAxis:
-                    NumericAxis(minimum: 0, maximum: 1000, interval: 100),
+                    NumericAxis(minimum: 0, maximum: 1000, interval: 200),
                 series: <ChartSeries<ChartData, String>>[
                   ColumnSeries(
-                      dataSource: [ChartData('1', 200), ChartData('2', 300)],
+                      dataSource: AppAnother.getList(),
                       xValueMapper: (ChartData data, index) => data.hour,
                       yValueMapper: (ChartData data, index) => data.value,
                       color: AppColor.blue1.withOpacity(0.5))

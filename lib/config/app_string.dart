@@ -15,6 +15,42 @@ class AppString {
   static const weight = 'Weight';
   static const bodyFat = 'BodyFat';
   static const dateTime = 'DateTime';
+  static const name = 'name';
+  static const meals = 'Meals';
+  static const listMealsTable = 'list_meals_table';
+  static const day = 'Day';
+  static const hour = 'Hour';
+  static const foods = 'Foods';
+
+  // food
+  static const rice = 'Rice';
+  static const beef = 'Beef';
+  static const pork = 'Pork';
+  static const chickenEgg = 'Chicken egg';
+  static const duckEgg = 'Duck egg';
+  static const chicken = 'Chicken';
+  static const chickenBreast = 'Chicken Breast';
+  static const duck = 'Duck';
+  static const duckBreast = 'Duck breast';
+  static const tuna = 'Tuna';
+  static const bread = 'Bread';
+  static const sanwich = 'Sanwich';
+  static const tilapia = 'Tilapia';
+  static const salmon = 'Salmon';
+  static const milk = 'Milk';
+  static const soymilk = 'Soymilk';
+  static const potato = 'Potato';
+  static const tomato = 'Tomato';
+  static const sweetPotato = 'Sweet potato';
+  static const orange = 'Orange';
+  static const waterMelon = 'WaterMelon';
+  static const banana = 'Banana';
+  static const blackBeans = 'Black beans';
+  static const greenBeans = 'Green beans';
+  static const apple = 'Apple';
+  static const pear = 'Pear';
+  static const unit = 'Unit';
+  //
   static const gender = 'Gender';
   static const age = 'Age';
   static const activity = 'Activity';

@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:fitness_app_bloc/config/app_another.dart';
 import 'package:fitness_app_bloc/config/app_string.dart';
+import 'package:fitness_app_bloc/db/database_recipes.dart';
 import 'package:formz/formz.dart';
 import '../../../db/database_helper.dart';
 
@@ -238,7 +239,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         });
         double calories = AppAnother.getCalories(state, isMetric);
 
-        await DbHelper().insert(AppString.recipesTable, {
+        await DbRecipes().insert(AppString.recipesTable, {
           AppString.calories: calories.toInt().toString(),
           AppString.protein: '0',
           AppString.fats: '0',
@@ -307,12 +308,13 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         });
         double calories = AppAnother.getCalories(state, isMetric);
 
-        await DbHelper().insert(AppString.recipesTable, {
+        await DbRecipes().insert(AppString.recipesTable, {
           AppString.calories: calories.toInt().toString(),
           AppString.protein: '0',
           AppString.fats: '0',
           AppString.carbs: '0'
         });
+
         emit(state.copyWith(status: FormzSubmissionStatus.success));
 
         log('Done');

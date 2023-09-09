@@ -72,7 +72,12 @@ class _ActionScreenState extends State<ActionScreen> {
     final height = MediaQuery.of(context).size.height -
         MediaQuery.of(context).padding.top -
         AppBar().preferredSize.height;
-    return BlocBuilder<VisibilityBloc, VisibilityState>(
+    return BlocConsumer<VisibilityBloc, VisibilityState>(
+      listener: (context, state) {
+        if (state is PracticeState) {
+          flutterTts.speak('Hello i want to fuck beautiful girls');
+        }
+      },
       builder: (context, state) {
         return WillPopScope(
           onWillPop: () async {
@@ -578,10 +583,9 @@ class _ActionScreenState extends State<ActionScreen> {
                             ),
                           )
                         : state is PracticeState
-                            ? BlocBuilder<TimerBloc, TimerState>(
+                            ? BlocConsumer<TimerBloc, TimerState>(
+                                listener: (context, state) {},
                                 builder: (context, stateTimer) {
-                                  flutterTts.speak(
-                                      '${widget.exercise.split(',')[state.exercise]}set${state.set}');
                                   return Container(
                                       height: height,
                                       width: double.infinity,
@@ -606,7 +610,8 @@ class _ActionScreenState extends State<ActionScreen> {
                                                   widget.set,
                                                   dateTimeFirst,
                                                   dateTime,
-                                                  stateTimer,
+                                                  stateTimer.duration,
+                                                  flutterTts,
                                                   historyBloc,
                                                   state,
                                                   widget.method);
@@ -695,7 +700,7 @@ class _ActionScreenState extends State<ActionScreen> {
                                         }
                                       }
 
-                                      DateTime dateTime = DateTime.now();
+                                      // DateTime dateTime = DateTime.now();
                                       return
                                           //  DateTime.parse(dateTimeFirst)
                                           //             .difference(dateTime)
@@ -824,7 +829,7 @@ class _ActionScreenState extends State<ActionScreen> {
                                                               indexRepAndTime) {
                                                             return Padding(
                                                               padding: const EdgeInsets
-                                                                      .only(
+                                                                  .only(
                                                                   bottom: AppDimens
                                                                       .dimens_3),
                                                               child: Column(
@@ -1015,7 +1020,8 @@ void handlerPractice(
     String set,
     String dateTimeFirst,
     String dateTime,
-    TimerState stateTimer,
+    int duration,
+    FlutterTts flutterTts,
     HistoryBloc historyBloc,
     PracticeState state,
     String method) async {
@@ -1041,7 +1047,7 @@ void handlerPractice(
       AppString.dateTime: dateTimeFirst,
       AppString.exercise: exercise.split(',')[state.exercise],
       AppString.setNumber: state.set.toString(),
-      AppString.timeAtSet: stateTimer.duration.toString(),
+      AppString.timeAtSet: duration.toString(),
       AppString.rep: '0',
       AppString.weight: '0'
     });
@@ -1065,7 +1071,7 @@ void handlerPractice(
       AppString.dateTime: dateTimeFirst,
       AppString.exercise: exercise.split(',')[state.exercise],
       AppString.setNumber: state.set.toString(),
-      AppString.timeAtSet: stateTimer.duration.toString(),
+      AppString.timeAtSet: duration.toString(),
       AppString.rep: '0',
       AppString.weight: '0'
     });

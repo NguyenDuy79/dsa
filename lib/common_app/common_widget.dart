@@ -1,7 +1,4 @@
-import 'package:fitness_app_bloc/config/app_another.dart';
-import 'package:fitness_app_bloc/config/app_color.dart';
-import 'package:fitness_app_bloc/config/app_dimens.dart';
-import 'package:fitness_app_bloc/config/app_font.dart';
+import 'package:fitness_app_bloc/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -302,6 +299,50 @@ class CommonWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  static Widget progress(double precent, String value, Color color) {
+    return Stack(
+      children: [
+        Center(
+          child: SizedBox(
+            height: AppDimens.dimens_35,
+            width: AppDimens.dimens_35,
+            child: RotationTransition(
+              turns: const AlwaysStoppedAnimation(180 / 360),
+              child: CircularProgressIndicator(
+                backgroundColor: color.withOpacity(0.2),
+                color: color,
+                value: precent,
+                strokeWidth: AppDimens.dimens_5,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: AppDimens.dimens_35,
+          width: AppDimens.dimens_35,
+          child: Center(
+            child: Text(
+              value,
+              style: AppAnother.textStyleDefault(
+                  AppDimens.dimens_12, AppFont.medium, AppColor.blackColor),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  static SnackBar errorSnackBar(String value) {
+    return SnackBar(
+      duration: const Duration(seconds: 1),
+      content: Text(
+        value,
+        style: AppAnother.textStyleDefault(
+            AppDimens.dimens_20, AppFont.normal, AppColor.redColor1),
       ),
     );
   }
