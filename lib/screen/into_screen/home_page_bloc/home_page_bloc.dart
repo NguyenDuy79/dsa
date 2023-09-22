@@ -1,8 +1,10 @@
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:fitness_app_bloc/config/app_another.dart';
 import 'package:fitness_app_bloc/config/app_string.dart';
 import 'package:fitness_app_bloc/db/database_recipes.dart';
+import 'package:fitness_app_bloc/reused/method_reused.dart';
 import 'package:formz/formz.dart';
 import '../../../db/database_helper.dart';
 
@@ -11,6 +13,7 @@ part 'home_page_state.dart';
 
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   var isMetric = true;
+  int index = 0;
   int? inch;
   int? feet;
   int? gender;
@@ -22,7 +25,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   bool isValid = false;
   String heightError = 'Please enter height';
   String weightError = 'Please enter weight';
-  String ageError = 'Please enter ange';
+  String ageError = 'Please enter age';
   String bodyFatError = 'Please enter body fat';
 
   HomePageBloc() : super(HomePageInitial()) {
@@ -41,6 +44,11 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     on<OnChangeWeight>(_getChangeWeight);
     on<Submit>(_enterInformation);
     on<AddSubmit>(_addInformation);
+    on<TabChange>(_tabChange);
+  }
+  void _tabChange(TabChange event, Emitter<HomePageState> emit) {
+    index = event.tabIndex;
+    emit(state.copyWith(index: index));
   }
 
   void _getGender(HomePageEvent event, Emitter<HomePageState> emit) {
@@ -54,24 +62,20 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     }
   }
 
-  void _getPageViewChange(HomePageEvent event, Emitter<HomePageState> emit) {
-    if (event is PageViewChange) {
-      pageView += 1;
-      emit(PageViewChangeState());
-    }
+  void _getPageViewChange(PageViewChange event, Emitter<HomePageState> emit) {
+    pageView += 1;
+    emit(PageViewChangeState());
   }
 
-  void _changeUnti(HomePageEvent event, Emitter<HomePageState> emit) {
-    if (event is UntiChange) {
-      isMetric = event.isMetric;
-      if (isMetric) {
-        feet = null;
-        inch = null;
-        emit(state.copyWith(feet: 0, inch: 0));
-      } else {
-        emit(state.copyWith(height: 0));
-      }
-      emit(MetricChange());
+  void _changeUnti(UntiChange event, Emitter<HomePageState> emit) {
+    isMetric = event.isMetric;
+    if (isMetric) {
+      feet = null;
+      inch = null;
+      emit(state.copyWith(feet: 0, inch: 0, isMetric: true));
+    } else {
+      heightError = 'Please enter height';
+      emit(state.copyWith(height: 0, isMetric: false));
     }
   }
 
@@ -115,7 +119,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   void _getChangeAge(OnChangeAge event, Emitter<HomePageState> emit) {
     if (event.value.isEmpty) {
       ageError = 'Please enter age';
-      emit(state.copyWith());
+      emit(state.copyWith(temporary: event.value));
     } else {
       ageError = '';
       age = event.value;
@@ -126,20 +130,22 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   void _getChangeBodyFat(OnChangeBodyFat event, Emitter<HomePageState> emit) {
     if (event.value.isEmpty) {
       bodyFatError = 'Please enter body fat';
-      emit(state.copyWith());
+      emit(state.copyWith(temporary: bodyFatError));
     } else if (event.value.contains(',') ||
         event.value.contains(' ') ||
         event.value.contains('-') ||
         event.value.contains('.')) {
       bodyFatError = 'Please enter a positive integer';
-      emit(state.copyWith());
+      emit(state.copyWith(temporary: event.value));
     } else {
       if (double.parse(event.value) <= 0 || double.parse(event.value) > 100) {
         bodyFatError = 'Please enter corect body fat';
-        emit(state.copyWith(bodyFat: int.parse(event.value)));
+        emit(state.copyWith(
+            bodyFat: int.parse(event.value), temporary: bodyFatError));
       } else {
         bodyFatError = '';
-        emit(state.copyWith(bodyFat: int.parse(event.value)));
+        emit(state.copyWith(
+            bodyFat: int.parse(event.value), temporary: bodyFatError));
       }
     }
   }
@@ -147,46 +153,52 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   void _getChangeHeight(OnChangeHeight event, Emitter<HomePageState> emit) {
     if (event.value.isEmpty) {
       heightError = 'Please enter height';
-      emit(state.copyWith());
+      emit(state.copyWith(temporary: heightError));
     } else if (event.value.contains(',') ||
         event.value.contains(' ') ||
         event.value.contains('-') ||
         event.value.contains('.')) {
       heightError = 'Please enter a positive integer';
-      emit(state.copyWith());
+      emit(state.copyWith(temporary: event.value));
     } else if (int.parse(event.value) <= 50 || int.parse(event.value) > 272) {
       heightError = 'Please enter corect height';
-      emit(state.copyWith(height: int.parse(event.value)));
+      emit(state.copyWith(
+          height: int.parse(event.value), temporary: heightError));
     } else {
       heightError = '';
-      emit(state.copyWith(height: int.parse(event.value)));
+      emit(state.copyWith(
+          height: int.parse(event.value), temporary: heightError));
     }
   }
 
   void _getChangeWeight(OnChangeWeight event, Emitter<HomePageState> emit) {
     if (event.value.isEmpty) {
       weightError = 'Please enter weight';
-      emit(state.copyWith());
+      emit(state.copyWith(temporary: weightError));
     } else if (event.value.contains(',') ||
         event.value.contains(' ') ||
         event.value.contains('-') ||
         event.value.contains('.')) {
       weightError = 'Please enter a positive interger';
-      emit(state.copyWith());
+      emit(state.copyWith(
+        temporary: event.value,
+      ));
     } else {
       if (int.parse(event.value) <= 5) {
         weightError = 'Please enter corect weight';
-        emit(state.copyWith(weight: int.parse(event.value)));
+        emit(state.copyWith(
+            weight: int.parse(event.value), temporary: weightError));
       } else {
         weightError = '';
-        emit(state.copyWith(weight: int.parse(event.value)));
+        emit(state.copyWith(
+            weight: int.parse(event.value), temporary: weightError));
       }
     }
   }
 
   Future<void> _enterInformation(
       Submit event, Emitter<HomePageState> emit) async {
-    emit(state.copyWith());
+    emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
     submited = true;
 
     if (isMetric) {
@@ -218,9 +230,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
     if (isValid) {
       DateTime dateTime = DateTime.now();
-      emit(state.copyWith(
-          status: FormzSubmissionStatus.inProgress,
-          dateTime: dateTime.toString()));
+      emit(state.copyWith(dateTime: dateTime.toString()));
 
       try {
         await DbHelper().insert(AppString.informationTable, {
@@ -237,7 +247,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           AppString.activity: state.activity,
           AppString.bodyFat: state.bodyFat,
         });
-        double calories = AppAnother.getCalories(state, isMetric);
+        double calories = MethodReused.getCalories(state, isMetric);
 
         await DbRecipes().insert(AppString.recipesTable, {
           AppString.calories: calories.toInt().toString(),
@@ -252,6 +262,8 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         emit(state.copyWith(status: FormzSubmissionStatus.failure));
         log('Feild');
       }
+    } else {
+      emit(state.copyWith(status: FormzSubmissionStatus.failure));
     }
   }
 
@@ -261,6 +273,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
     emit(state.copyWith(
         age: listInfo.first[AppString.age].toString(),
+        status: FormzSubmissionStatus.inProgress,
         gender: listInfo.first[AppString.gender].toString()));
     submited = true;
 
@@ -306,7 +319,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           AppString.activity: state.activity,
           AppString.bodyFat: state.bodyFat,
         });
-        double calories = AppAnother.getCalories(state, isMetric);
+        double calories = MethodReused.getCalories(state, isMetric);
 
         await DbRecipes().insert(AppString.recipesTable, {
           AppString.calories: calories.toInt().toString(),
@@ -316,12 +329,11 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         });
 
         emit(state.copyWith(status: FormzSubmissionStatus.success));
-
-        log('Done');
       } catch (_) {
         emit(state.copyWith(status: FormzSubmissionStatus.failure));
-        log('Feild');
       }
+    } else {
+      emit(state.copyWith(status: FormzSubmissionStatus.failure));
     }
   }
 }

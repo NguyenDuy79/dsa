@@ -19,6 +19,11 @@ class OnChangeWeightMeals extends AddMealsEvent {
   const OnChangeWeightMeals(this.value);
 }
 
+class DeleteFoodEvent extends AddMealsEvent {
+  final String name;
+  const DeleteFoodEvent(this.name);
+}
+
 class AddFieldVisilibity extends AddMealsEvent {}
 
 class SubmitDish extends AddMealsEvent {}

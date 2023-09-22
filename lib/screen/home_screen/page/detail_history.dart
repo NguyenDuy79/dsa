@@ -1,7 +1,7 @@
+import 'package:fitness_app_bloc/reused/widget_reused.dart';
 import 'package:fitness_app_bloc/screen/into_screen/home_page_bloc/home_page_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../common_app/common_widget.dart';
 import '../../../common_bloc/bloc_history/history_bloc.dart';
 import '../../../config/config.dart';
 
@@ -39,8 +39,8 @@ class DetailHistoryScreen extends StatelessWidget {
                 width: width * 0.3,
                 child: GestureDetector(
                     onTap: () {
-                      context.read<HomePageBloc>().add(UntiChange(
-                          isMetric: !context.read<HomePageBloc>().isMetric));
+                      context.read<HomePageBloc>().add(
+                          UntiChange(!context.read<HomePageBloc>().isMetric));
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(AppDimens.dimens_5),
@@ -102,23 +102,13 @@ class DetailHistoryScreen extends StatelessWidget {
                           } else if (stateHistory is HistoryLoaded) {
                             List<Map<String, Object?>>? listRepTime =
                                 stateHistory.dataRepAndTime;
-                            List<Map<String, Object?>> historyRepTime = [];
-                            for (var item in listRepTime) {
-                              if (history[AppString.dateTime] ==
-                                  item[AppString.dateTime]) {
-                                historyRepTime.add(item);
-                              }
-                            }
+                            List<Map<String, Object?>> historyRepTime =
+                                getHistoryToday(listRepTime, history);
 
-                            List<Map<String, Object?>> exerciseRepAndTime = [];
-                            for (var item in historyRepTime) {
-                              if (history[AppString.exercise]
-                                      .toString()
-                                      .split(',')[index] ==
-                                  item[AppString.exercise].toString()) {
-                                exerciseRepAndTime.add(item);
-                              }
-                            }
+                            List<Map<String, Object?>> exerciseRepAndTime =
+                                getListRepAndTimeToday(
+                                    historyRepTime, index, history);
+
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -132,148 +122,43 @@ class DetailHistoryScreen extends StatelessWidget {
                                       AppColor.blackColor),
                                 ),
                                 SizedBox(
-                                  height: exerciseRepAndTime.length *
-                                      AppDimens.dimens_100,
+                                  height: AppDimens.dimens_200,
                                   child: ListView.builder(
                                     itemCount: exerciseRepAndTime.length,
                                     itemBuilder: (context, indexRepAndTime) {
-                                      return Padding(
-                                        padding: const EdgeInsets.only(
-                                            bottom: AppDimens.dimens_3),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Set ${exerciseRepAndTime[indexRepAndTime]['SetNumber']}:',
-                                              style:
-                                                  AppAnother.textStyleDefault(
-                                                      AppDimens.dimens_20,
-                                                      AppFont.semiBold,
-                                                      AppColor.blackColor),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                    'Time: ${exerciseRepAndTime[indexRepAndTime][AppString.timeAtSet]}',
-                                                    style: AppAnother
-                                                        .textStyleDefault(
-                                                            AppDimens.dimens_18,
-                                                            AppFont.normal,
-                                                            AppColor
-                                                                .blackColor)),
-                                                const SizedBox(
-                                                  width: AppDimens.dimens_20,
-                                                ),
-                                                Text(
-                                                    'Rest time: ${history[AppString.restTime].toString().split(',')[index]}',
-                                                    style: AppAnother
-                                                        .textStyleDefault(
-                                                            AppDimens.dimens_18,
-                                                            AppFont.normal,
-                                                            AppColor
-                                                                .blackColor)),
-                                                if (int.parse(exerciseRepAndTime[
-                                                                indexRepAndTime]
-                                                            [AppString.rep]
-                                                        .toString()) !=
-                                                    0)
-                                                  const SizedBox(
-                                                    width: AppDimens.dimens_20,
-                                                  ),
-                                              ],
-                                            ),
-                                            if (int.parse(exerciseRepAndTime[
-                                                                indexRepAndTime]
-                                                            [AppString.rep]
-                                                        .toString()) ==
-                                                    0 &&
-                                                double.parse(exerciseRepAndTime[
-                                                                indexRepAndTime]
-                                                            [AppString.weight]
-                                                        .toString()) ==
-                                                    0)
-                                              Center(
-                                                child: ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                            backgroundColor:
-                                                                AppColor
-                                                                    .greenColor1),
-                                                    onPressed: () {
-                                                      CommonWidget
-                                                          .showRepAndWeightDialog(
-                                                        context,
-                                                        controller,
-                                                        editingController,
-                                                        key,
-                                                        exerciseRepAndTime[
-                                                                indexRepAndTime]
-                                                            [AppString
-                                                                .id] as int,
-                                                        AppAnother.validWeight,
-                                                      );
-                                                    },
-                                                    child: Text(
-                                                      'Submit',
-                                                      style: AppAnother
-                                                          .textStyleDefault(
-                                                              AppDimens
-                                                                  .dimens_20,
-                                                              AppFont.normal,
-                                                              AppColor
-                                                                  .blackColor),
-                                                    )),
-                                              ),
-                                            if (int.parse(exerciseRepAndTime[
-                                                                indexRepAndTime]
-                                                            [AppString.rep]
-                                                        .toString()) !=
-                                                    0 &&
-                                                double.parse(exerciseRepAndTime[
-                                                                indexRepAndTime]
-                                                            [AppString.weight]
-                                                        .toString()) !=
-                                                    0)
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                      'Rep: ${exerciseRepAndTime[indexRepAndTime][AppString.rep]}',
-                                                      style: AppAnother
-                                                          .textStyleDefault(
-                                                              AppDimens
-                                                                  .dimens_18,
-                                                              AppFont.normal,
-                                                              AppColor
-                                                                  .blackColor)),
-                                                  const SizedBox(
-                                                    width: AppDimens.dimens_20,
-                                                  ),
-                                                  Text(
-                                                      context
-                                                              .read<
-                                                                  HomePageBloc>()
-                                                              .isMetric
-                                                          ? result(
-                                                              'Weight:  ${double.parse(exerciseRepAndTime[indexRepAndTime][AppString.weight] as String).toStringAsFixed(1)}')
-                                                          : result(
-                                                              'Weight: ${(double.parse(exerciseRepAndTime[indexRepAndTime][AppString.weight] as String) * (1 / 0.45359237)).toStringAsFixed(1)}'),
-                                                      style: AppAnother
-                                                          .textStyleDefault(
-                                                              AppDimens
-                                                                  .dimens_18,
-                                                              AppFont.normal,
-                                                              AppColor
-                                                                  .blackColor)),
-                                                ],
-                                              )
-                                          ],
-                                        ),
-                                      );
+                                      return exerciseRepAndTime[indexRepAndTime]
+                                                  [AppString.exercise]
+                                              .toString()
+                                              .contains('Dropset')
+                                          ? WidgetReused.setItemDropset(
+                                              exerciseRepAndTime,
+                                              indexRepAndTime,
+                                              history,
+                                              index,
+                                              controller,
+                                              editingController,
+                                              key)
+                                          : exerciseRepAndTime[indexRepAndTime]
+                                                      [AppString.exercise]
+                                                  .toString()
+                                                  .contains('Superset')
+                                              ? WidgetReused.setItemSuperset(
+                                                  exerciseRepAndTime,
+                                                  indexRepAndTime,
+                                                  history,
+                                                  index,
+                                                  controller,
+                                                  editingController,
+                                                  key)
+                                              : WidgetReused.setItem(
+                                                  exerciseRepAndTime,
+                                                  indexRepAndTime,
+                                                  history,
+                                                  index,
+                                                  controller,
+                                                  editingController,
+                                                  key,
+                                                  context);
                                     },
                                   ),
                                 )
@@ -302,4 +187,29 @@ String result(String value) {
   } else {
     return value;
   }
+}
+
+List<Map<String, Object?>> getHistoryToday(
+    List<Map<String, Object?>> listRepTime, Map<String, Object?> history) {
+  List<Map<String, Object?>> result = [];
+  for (var item in listRepTime) {
+    if (history[AppString.dateTime] == item[AppString.dateTime]) {
+      result.add(item);
+    }
+  }
+  return result;
+}
+
+List<Map<String, Object?>> getListRepAndTimeToday(
+    List<Map<String, Object?>> historyRepTime,
+    int index,
+    Map<String, Object?> history) {
+  List<Map<String, Object?>> result = [];
+  for (var item in historyRepTime) {
+    if (history[AppString.exercise].toString().split(',')[index] ==
+        item[AppString.exercise].toString()) {
+      result.add(item);
+    }
+  }
+  return result;
 }

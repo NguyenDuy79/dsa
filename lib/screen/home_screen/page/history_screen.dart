@@ -11,7 +11,6 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     return BlocConsumer<HistoryBloc, HistoryState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -20,88 +19,75 @@ class HistoryScreen extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (state is HistoryLoaded) {
-          return BlocConsumer<FilterBloc, FilterState>(
-            listener: (context, stateFilter) {},
-            builder: (context, stateFilter) {
-              List<Map<String, Object?>> value = [];
-              if (stateFilter is FilterDone) {
-                value = stateFilter.result.reversed.toList();
-              } else {
-                value = state.dataHistory.reversed.toList();
-              }
-
-              final List<String> timeForMonth = [];
-
-              for (int i = 0; i < value.length; i++) {
-                timeForMonth.add(value[i][AppString.dateTime] as String);
-
-                for (int j = i + 1; j < value.length; j++) {
-                  if (DateFormat('M-yyyy').format(DateTime.parse(
-                          value[i][AppString.dateTime] as String)) !=
-                      DateFormat('M-yyyy').format(DateTime.parse(
-                          value[j][AppString.dateTime] as String))) {
-                    i = j;
-                    j = value.length;
-                  } else if (j == value.length - 1) {
-                    i = j + 1;
-                  }
-                }
-              }
-
-              return Scaffold(
-                backgroundColor: AppColor.colorGrey1,
-                appBar: AppBar(
-                  backgroundColor: AppColor.colorGrey1,
-                  automaticallyImplyLeading: false,
-                  leading: IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
+          return Scaffold(
+            backgroundColor: AppColor.colorGrey1,
+            appBar: AppBar(
+              backgroundColor: AppColor.colorGrey1,
+              automaticallyImplyLeading: false,
+              leading: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back_ios,
+                    color: AppColor.blackColor,
+                  )),
+              elevation: AppDimens.dimens_0,
+              centerTitle: true,
+              title: Text(
+                'History',
+                style: AppAnother.textStyleDefault(
+                    AppDimens.dimens_25, AppFont.semiBold, AppColor.blackColor),
+              ),
+              actions: [
+                SizedBox(
+                  width: AppDimens.dimens_130,
+                  child: PopupMenuButton(
+                      onSelected: (value) {
+                        context
+                            .read<FilterBloc>()
+                            .add(OnChangeFilter(value, state.dataHistory));
                       },
-                      icon: const Icon(
-                        Icons.arrow_back_ios,
-                        color: AppColor.blackColor,
-                      )),
-                  elevation: AppDimens.dimens_0,
-                  centerTitle: true,
-                  title: Text(
-                    'History',
-                    style: AppAnother.textStyleDefault(AppDimens.dimens_25,
-                        AppFont.semiBold, AppColor.blackColor),
-                  ),
-                  actions: [
-                    SizedBox(
-                      width: width * 0.27,
-                      child: PopupMenuButton(
-                          onSelected: (value) {
-                            context
-                                .read<FilterBloc>()
-                                .add(OnChangeFilter(value, state.dataHistory));
-                          },
-                          icon: Container(
-                            padding: const EdgeInsets.all(AppDimens.dimens_3),
-                            child: FittedBox(
-                              child: Row(
-                                children: [
-                                  Text(
-                                    context.read<FilterBloc>().filter,
-                                    style: AppAnother.textStyleDefault(
-                                        AppDimens.dimens_17,
-                                        AppFont.medium,
-                                        AppColor.blackColor),
-                                  ),
-                                  const Icon(
-                                    Icons.arrow_drop_down_sharp,
-                                    color: AppColor.blackColor,
-                                  )
-                                ],
+                      icon: Container(
+                        padding: const EdgeInsets.all(AppDimens.dimens_3),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                context.select(
+                                    (FilterBloc bloc) => bloc.state.name),
+                                style: AppAnother.textStyleDefault(
+                                    AppDimens.dimens_17,
+                                    AppFont.medium,
+                                    AppColor.blackColor),
+                                textAlign: TextAlign.end,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                          ),
-                          itemBuilder: (context) => listPopUp()),
-                    )
-                  ],
-                ),
-                body: Container(
+                            const Icon(
+                              Icons.arrow_drop_down_sharp,
+                              color: AppColor.blackColor,
+                              size: AppDimens.dimens_25,
+                            )
+                          ],
+                        ),
+                      ),
+                      itemBuilder: (context) => listPopUp()),
+                )
+              ],
+            ),
+            body: BlocBuilder<FilterBloc, FilterState>(
+              builder: (context, stateFilter) {
+                List<Map<String, Object?>> value = [];
+                if (stateFilter is FilterDone) {
+                  value = stateFilter.result.reversed.toList();
+                } else {
+                  value = state.dataHistory.reversed.toList();
+                }
+
+                final List<String> timeForMonth = getListTimeOfMoth(value);
+                return Container(
                     padding: const EdgeInsets.symmetric(
                         vertical: AppDimens.dimens_20),
                     child: ListView.builder(
@@ -163,17 +149,16 @@ class HistoryScreen extends StatelessWidget {
                                                               .start,
                                                       children: [
                                                         Text(
-                                                            'Time: ${DateTime.parse(newList[indexItem][AppString.dateTime] as String).difference(DateTime.parse(newList[indexItem]['DateTimeEnd'] as String)).inMinutes} min'),
+                                                            'Time: ${DateTime.parse(newList[indexItem][AppString.dateTimeEnd] as String).difference(DateTime.parse(newList[indexItem][AppString.dateTime] as String)).inMinutes} min'),
                                                         Text(
-                                                            'Exercise: ${newList[index][AppString.exercise].toString().split(',').length - 1}'),
+                                                            'Exercise: ${newList[indexItem][AppString.exercise].toString().split(',').length - 1}'),
                                                       ],
                                                     ),
                                                     Row(
                                                       children: [
                                                         Text(DateFormat('dd/M')
-                                                            .format(DateTime
-                                                                .parse(newList[
-                                                                            index]
+                                                            .format(DateTime.parse(
+                                                                newList[indexItem]
                                                                         [
                                                                         AppString
                                                                             .dateTime]
@@ -199,9 +184,9 @@ class HistoryScreen extends StatelessWidget {
                               ],
                             ),
                           );
-                        })),
-              );
-            },
+                        }));
+              },
+            ),
           );
         } else {
           return Container();
@@ -241,4 +226,24 @@ listOfMonth(String format, List<Map<String, Object?>> listState) {
     }
   }
   return newList;
+}
+
+List<String> getListTimeOfMoth(List<Map<String, Object?>> value) {
+  List<String> timeForMonth = [];
+  for (int i = 0; i < value.length; i++) {
+    timeForMonth.add(value[i][AppString.dateTime] as String);
+
+    for (int j = i + 1; j < value.length; j++) {
+      if (DateFormat('M-yyyy')
+              .format(DateTime.parse(value[i][AppString.dateTime] as String)) !=
+          DateFormat('M-yyyy')
+              .format(DateTime.parse(value[j][AppString.dateTime] as String))) {
+        i = j;
+        j = value.length;
+      } else if (j == value.length - 1) {
+        i = j + 1;
+      }
+    }
+  }
+  return timeForMonth;
 }

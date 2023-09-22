@@ -1,17 +1,22 @@
-import 'package:fitness_app_bloc/screen/home_screen/bloc/home_index_bloc.dart';
 import 'package:fitness_app_bloc/screen/home_screen/page/action_screen.dart';
 
 import 'package:fitness_app_bloc/common_app/ticker.dart';
 import 'package:fitness_app_bloc/screen/home_screen/page/add_information.dart';
 import 'package:fitness_app_bloc/screen/home_screen/page/add_meals_screen.dart';
+import 'package:fitness_app_bloc/screen/home_screen/page/add_workout_shedule.dart';
 import 'package:fitness_app_bloc/screen/home_screen/page/bloc/bloc_add_meals/add_meals_bloc.dart';
+import 'package:fitness_app_bloc/screen/home_screen/page/bloc/bloc_analytics/analytics_toggle_bloc.dart';
 
 import 'package:fitness_app_bloc/screen/home_screen/page/detail_history.dart';
 import 'package:fitness_app_bloc/screen/home_screen/page/detail_informatton_screen.dart';
 import 'package:fitness_app_bloc/screen/home_screen/page/history_screen.dart';
+import 'package:fitness_app_bloc/screen/home_screen/page/history_today_screen.dart';
 import 'package:fitness_app_bloc/screen/home_screen/page/information_screen.dart';
 import 'package:fitness_app_bloc/screen/home_screen/page/setup_exercise_screen.dart';
-import 'package:fitness_app_bloc/screen/home_screen/tabs/bloc/bloc/recipes_toggle_bloc.dart';
+
+import 'package:fitness_app_bloc/screen/home_screen/page/workout_schedule_detail.dart';
+import 'package:fitness_app_bloc/screen/home_screen/tabs/bloc/bloc_home_index/home_index_bloc.dart';
+
 import 'package:fitness_app_bloc/screen/splash_screen.dart';
 import 'package:fitness_app_bloc/screen/home_screen/tabs/screen/home_screen.dart';
 import 'package:fitness_app_bloc/screen/into_screen/enter_information.dart';
@@ -37,8 +42,12 @@ class RouteGenerator {
   static const addInformationScreen = '/add-information-screen';
   static const detailInformation = '/detail-information';
   static const historyScreen = '/history-screen';
+  static const historyTodayScreen = '/history-today-screen';
   static const detailHistoryScreen = '/detail-history-screen';
   static const addMealsScreen = '/add-meals-screen';
+  static const addWorkoutShedule = '/add-workout-shedule-screen';
+  static const workoutScheduleDetail = '/workout-schedule-detail-screen';
+  static const supersetDropsetScreen = '/super-drop-screen';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -62,9 +71,9 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => MultiBlocProvider(providers: [
             BlocProvider(
-              create: (context) => RecipesToggleBloc(),
+              create: (context) => HomeIndexBloc(),
             ),
-            BlocProvider(create: (context) => HomeIndexBloc()),
+            BlocProvider(create: (context) => HomePageBloc())
           ], child: const HomeScreen()),
         );
       case setupExerciseScreen:
@@ -104,9 +113,11 @@ class RouteGenerator {
         );
       case addInformationScreen:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
+          builder: (_) => MultiBlocProvider(providers: [
+            BlocProvider(
               create: (context) => HomePageBloc(),
-              child: const AddInformationScreen()),
+            ),
+          ], child: const AddInformationScreen()),
         );
       case detailInformation:
         var args = settings.arguments as Map<String, Object?>;
@@ -119,6 +130,10 @@ class RouteGenerator {
             create: (context) => FilterBloc(),
             child: const HistoryScreen(),
           ),
+        );
+      case historyTodayScreen:
+        return MaterialPageRoute(
+          builder: (context) => const HistoryTodayScreen(),
         );
       case detailHistoryScreen:
         var args = settings.arguments as Map<String, Object?>;
@@ -135,6 +150,20 @@ class RouteGenerator {
             child: const AddMealsScreen(),
           ),
         );
+      case addWorkoutShedule:
+        var args = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => AnalyticsToggleBloc(),
+            child: AddWorkoutSheduleScreen(args),
+          ),
+        );
+      case workoutScheduleDetail:
+        var args = settings.arguments as Map<String, Object?>;
+        return MaterialPageRoute(
+          builder: (context) => WorkoutScheduleDetail(args),
+        );
+
       default:
         return _errorRoute();
     }

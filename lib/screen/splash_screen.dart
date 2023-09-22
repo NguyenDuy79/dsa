@@ -1,3 +1,4 @@
+import 'package:fitness_app_bloc/common_bloc/bloc_recipes/recipes_bloc.dart';
 import 'package:fitness_app_bloc/config/app_path.dart';
 import 'package:fitness_app_bloc/config/app_string.dart';
 import 'package:fitness_app_bloc/config/route_generator.dart';
@@ -14,6 +15,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+
     BlocProvider.of<HomePageBloc>(context).add(SetSplash());
     return BlocConsumer<HomePageBloc, HomePageState>(
       listener: (context, state) async {
@@ -37,6 +39,8 @@ class SplashScreen extends StatelessWidget {
               RouteGenerator.intoScreen,
             );
           }
+        } else if (state is SplashLoading) {
+          context.read<RecipesBloc>().add(UpdatePerday(DateTime.now()));
         }
       },
       builder: ((context, state) {

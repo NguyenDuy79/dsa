@@ -37,8 +37,9 @@ class ActivityBloc extends Bloc<ActivityEvent, ActivityState> {
     emit(ActivityLoaded(list));
   }
 
-  void _updataActivity(UpdateActivity event, Emitter<ActivityState> emit) {
-    DbHelper().insert(event.tableName, event.data);
+  void _updataActivity(
+      UpdateActivity event, Emitter<ActivityState> emit) async {
+    await DbHelper().insert(event.tableName, event.data);
     _dbInformationRespository.changeData();
     emit(const ActivityLoading([]));
   }

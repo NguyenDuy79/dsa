@@ -47,17 +47,33 @@ class DbHistoryRepository {
       ''', [dateTimeEnd, id]);
   }
 
+  Future<void> updateData(int id, String duration, String set) async {
+    final sqlDb = await DbHelper().database();
+    await sqlDb.rawUpdate('''UPDATE ${AppString.repTimeTable}
+        SET ${AppString.setNumber} =?, ${AppString.timeAtSet} =?
+        WHERE ${AppString.id} =?
+    
+      ''', [set, duration, id]);
+  }
+
   Future<void> updateSetAndTime(
     String rep,
     String weight,
     int id,
   ) async {
     final sqlDb = await DbHelper().database();
-    await sqlDb.rawUpdate('''UPDATE ${AppString.recipesTable}
+    await sqlDb.rawUpdate('''UPDATE ${AppString.repTimeTable}
         SET ${AppString.rep} =?, ${AppString.weight} =?
         WHERE ${AppString.id} =?
     
       ''', [rep, weight, id]);
+  }
+
+  Future<List<Map<String, Object?>>> rawQuery(int id) async {
+    final sqlDb = await DbHelper().database();
+    return await sqlDb.rawQuery(
+        'SELECT * FROM ${AppString.repTimeTable} WHERE ${AppString.id}=?',
+        [id]);
   }
 
   void close() {

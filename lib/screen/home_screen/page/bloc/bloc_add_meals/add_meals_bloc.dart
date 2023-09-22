@@ -33,6 +33,7 @@ class AddMealsBloc extends Bloc<AddMealsEvent, AddMealsState> {
     on<AddFieldVisilibity>(_visibilityAddField);
     on<SubmitDish>(_submit);
     on<SubmitMeals>(_submitMeals);
+    on<DeleteFoodEvent>(_deleteFood);
   }
   _visibilityAddField(AddFieldVisilibity event, Emitter<AddMealsState> emit) {
     isAddVibility = true;
@@ -103,6 +104,76 @@ class AddMealsBloc extends Bloc<AddMealsEvent, AddMealsState> {
     emit(state.copyWith(status: FormzSubmissionStatus.success));
   }
 
+  _deleteFood(DeleteFoodEvent event, Emitter<AddMealsState> emit) {
+    var index = AppAnother.listFood.indexWhere(
+        (element) => (element[AppString.name] as String) == event.name);
+
+    String allWeight = '';
+    for (int i = 0; i < state.weight.split(',').length - 1; i++) {
+      if (i !=
+          state.food.split(',').indexWhere(
+                (element) => element == event.name,
+              )) {
+        allWeight = '$allWeight${state.weight.split(',')[i]},';
+      }
+    }
+    protein -= AppAnother.listFood[index][AppString.protein] *
+        int.parse(state.weight.split(',')[state.food.split(',').indexWhere(
+              (element) => element == event.name,
+            )]) /
+        100;
+    calories -= AppAnother.listFood[index][AppString.calories] *
+        int.parse(state.weight.split(',')[state.food.split(',').indexWhere(
+              (element) => element == event.name,
+            )]) /
+        100;
+    fats -= AppAnother.listFood[index][AppString.fats] *
+        int.parse(state.weight.split(',')[state.food.split(',').indexWhere(
+              (element) => element == event.name,
+            )]) /
+        100;
+    carbs -= AppAnother.listFood[index][AppString.carbs] *
+        int.parse(state.weight.split(',')[state.food.split(',').indexWhere(
+              (element) => element == event.name,
+            )]) /
+        100;
+
+    emit(
+      state.copyWith(
+          visibility: false,
+          food: state.food.replaceAll('${event.name},', ''),
+          weight: allWeight,
+          calories: calories -
+              AppAnother.listFood[index][AppString.calories] *
+                  int.parse(
+                      state.weight.split(',')[state.food.split(',').indexWhere(
+                            (element) => element == event.name,
+                          )]) /
+                  100,
+          protein: protein -
+              AppAnother.listFood[index][AppString.protein] *
+                  int.parse(
+                      state.weight.split(',')[state.food.split(',').indexWhere(
+                            (element) => element == event.name,
+                          )]) /
+                  100,
+          carbs: carbs -
+              AppAnother.listFood[index][AppString.carbs] *
+                  int.parse(
+                      state.weight.split(',')[state.food.split(',').indexWhere(
+                            (element) => element == event.name,
+                          )]) /
+                  100,
+          fats: fats -
+              AppAnother.listFood[index][AppString.fats] *
+                  int.parse(
+                      state.weight.split(',')[state.food.split(',').indexWhere(
+                            (element) => element == event.name,
+                          )]) /
+                  100),
+    );
+  }
+
   _submit(SubmitDish event, Emitter<AddMealsState> emit) {
     isSubmit = true;
     if (weightError.isEmpty && foodError.isEmpty) {
@@ -117,16 +188,62 @@ class AddMealsBloc extends Bloc<AddMealsEvent, AddMealsState> {
       currentFats = 0;
       currentProtein = 0;
 
-      emit(
-        state.copyWith(
-            visibility: false,
-            food: '${state.food}$food,',
-            weight: '${state.weight}$weight,',
-            calories: calories,
-            protein: protein,
-            carbs: carbs,
-            fats: fats),
-      );
+      if (state.food.split(',').indexWhere(
+                (element) => element == food,
+              ) >=
+          0) {
+        String newWeight =
+            (int.parse(state.weight.split(',')[state.food.split(',').indexWhere(
+                          (element) => element == food,
+                        )]) +
+                    int.parse(weight))
+                .toString();
+        String allWeight = '';
+        for (int i = 0; i < state.weight.split(',').length - 1; i++) {
+          if (i ==
+              state.food.split(',').indexWhere(
+                    (element) => element == food,
+                  )) {
+            allWeight = '$allWeight$newWeight,';
+          } else {
+            allWeight = '$allWeight${state.weight.split(',')[i]},';
+          }
+        }
+        emit(
+          state.copyWith(
+              visibility: false,
+              food: state.food,
+              weight: allWeight,
+              calories: calories,
+              protein: protein,
+              carbs: carbs,
+              fats: fats),
+        );
+
+        emit(
+          state.copyWith(
+              visibility: false,
+              food: state.food,
+              weight: allWeight,
+              calories: calories,
+              protein: protein,
+              carbs: carbs,
+              fats: fats),
+        );
+      } else {
+        emit(
+          state.copyWith(
+              visibility: false,
+              food: '${state.food}$food,',
+              weight: '${state.weight}$weight,',
+              calories: calories,
+              protein: protein,
+              carbs: carbs,
+              fats: fats),
+        );
+      }
+      weight = '';
+      food = '';
     } else {
       emit(state.copyWith(status: FormzSubmissionStatus.failure));
     }

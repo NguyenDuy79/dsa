@@ -13,7 +13,7 @@ class PageViewChange extends HomePageEvent {
 
 class UntiChange extends HomePageEvent {
   final bool isMetric;
-  UntiChange({required this.isMetric});
+  UntiChange(this.isMetric);
 }
 
 class SetFeet extends HomePageEvent {

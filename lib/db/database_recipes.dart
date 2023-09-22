@@ -13,12 +13,6 @@ class DbRecipes {
           '${AppString.protein} TEXT NOT NULL,'
           '${AppString.fats} TEXT NOT NULL,'
           '${AppString.carbs} TEXT NOT NULL)');
-      await db.execute('CREATE TABLE ${'meals_table'}('
-          '${AppString.hour} TEXT NOT NULL ,'
-          '${AppString.day} TEXT NOT NULL,'
-          '${AppString.foods} TEXT NOT NULL,'
-          '${AppString.weight} TEXT NOT NULL,'
-          '${AppString.calories} TEXT NOT NULL)');
       await db.execute('CREATE TABLE ${AppString.listMealsTable}('
           '${AppString.id}  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'
           '${AppString.hour} TEXT NOT NULL ,'
@@ -29,6 +23,39 @@ class DbRecipes {
           '${AppString.fats} TEXT NOT NULL,'
           '${AppString.carbs} TEXT NOT NULL,'
           '${AppString.calories} TEXT NOT NULL)');
+      await db.execute('CREATE TABLE ${AppString.recipesPerdayTable}('
+          '${AppString.dateTime} TEXT NOT NULL,'
+          '${AppString.calories} TEXT NOT NULL,'
+          '${AppString.protein} TEXT NOT NULL,'
+          '${AppString.fats} TEXT NOT NULL,'
+          '${AppString.carbs} TEXT NOT NULL)');
+      await db.execute('CREATE TABLE ${AppString.waterTable}('
+          '${AppString.dateTime} TEXT NOT NULL,'
+          '${AppString.water} INTEGER NOT NULL,'
+          'zero INTEGER NOT NULL,'
+          'one INTEGER NOT NULL,'
+          'two INTEGER NOT NULL,'
+          'three INTEGER NOT NULL,'
+          'four INTEGER NOT NULL,'
+          'five INTEGER NOT NULL,'
+          'six INTEGER NOT NULL,'
+          'seven INTEGER NOT NULL,'
+          'eight INTEGER NOT NULL,'
+          'nine INTEGER NOT NULL,'
+          'ten INTEGER NOT NULL,'
+          'eleven INTEGER NOT NULL,'
+          'twelve INTEGER NOT NULL,'
+          'thirteen INTEGER NOT NULL,'
+          'fourteen INTEGER NOT NULL,'
+          'fifteen INTEGER NOT NULL,'
+          'sixteen INTEGER NOT NULL,'
+          'seventeen INTEGER NOT NULL,'
+          'eighteen INTEGER NOT NULL,'
+          'nineteen INTEGER NOT NULL,'
+          'twenty INTEGER NOT NULL,'
+          'twenty_one INTEGER NOT NULL,'
+          'twenty_two INTEGER NOT NULL,'
+          'twenty_three INTEGER NOT NULL)');
     }, version: 1);
   }
 

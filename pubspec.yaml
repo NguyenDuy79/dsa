@@ -38,7 +38,7 @@ dependencies:
   intl: ^0.18.1
   wave: ^0.2.2
   syncfusion_flutter_charts: ^21.2.4
-
+  flutter_slidable: ^3.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -61,6 +61,10 @@ flutter:
     - assets/image/schedule.png
     - assets/image/menu.png
     - assets/image/health.png
+    - assets/image/yoga.png
+    - assets/image/calisthenics.png
+    - assets/image/cardio.png
+    - assets/image/empty.png
 
   
   fonts:

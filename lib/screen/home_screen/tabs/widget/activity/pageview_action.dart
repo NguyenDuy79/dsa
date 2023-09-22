@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../../config/app_another.dart';
-import '../../../../config/app_color.dart';
-import '../../../../config/app_dimens.dart';
-import '../../../../config/app_font.dart';
+import '../../../../../config/app_another.dart';
+import '../../../../../config/app_color.dart';
+import '../../../../../config/app_dimens.dart';
+import '../../../../../config/app_font.dart';
 
 class PageViewActionWidget extends StatelessWidget {
-  const PageViewActionWidget(this.width, {super.key});
+  PageViewActionWidget(this.width, {super.key});
   final double width;
-
+  final PageController controller = PageController();
   @override
   Widget build(BuildContext context) {
-    final PageController controller = PageController();
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[

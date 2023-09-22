@@ -1,8 +1,10 @@
 import 'package:fitness_app_bloc/common_bloc/bloc_activity/activity_bloc.dart';
+import 'package:fitness_app_bloc/common_bloc/bloc_anlytics/analytics_bloc.dart';
 import 'package:fitness_app_bloc/common_bloc/bloc_application/application_bloc.dart';
 import 'package:fitness_app_bloc/common_bloc/bloc_history/history_bloc.dart';
 
 import 'package:fitness_app_bloc/common_bloc/bloc_recipes/recipes_bloc.dart';
+import 'package:fitness_app_bloc/common_bloc/bloc_water/water_bloc.dart';
 
 import 'package:fitness_app_bloc/respository/app_repository.dart';
 
@@ -14,9 +16,13 @@ class CommonBloc {
       ActivityBloc(dbRespository: AppRepository.dbInformationRepository);
   static final historyBloc =
       HistoryBloc(dbHistoryRepository: AppRepository.dbHistoryRespository);
-  static final recipesBloc =
-      RecipesBloc(recipesRepository: AppRepository.dbRecipesRespository);
+  static final recipesBloc = RecipesBloc(
+      recipesRepository: AppRepository.dbRecipesRespository,
+      recipesPerdayRepository: AppRepository.dbRecipesPerdayRepository);
   static final applicationBloc = ApplicationBloc();
+  static final analyticsBloc =
+      AnalyticsBloc(dbAnalyticsRepository: AppRepository.dbAnalyticsRepository);
+  static final waterBloc = WaterBloc();
 
   static final List<BlocProvider> blocProviders = [
     BlocProvider<ActivityBloc>(create: (context) => activityBloc),
@@ -29,6 +35,12 @@ class CommonBloc {
     BlocProvider<ApplicationBloc>(
       create: (context) => applicationBloc,
     ),
+    BlocProvider<AnalyticsBloc>(
+      create: (context) => analyticsBloc,
+    ),
+    BlocProvider<WaterBloc>(
+      create: (context) => waterBloc,
+    )
   ];
 
   static void dispose() {
@@ -36,5 +48,6 @@ class CommonBloc {
     historyBloc.close();
     recipesBloc.close();
     applicationBloc.close();
+    waterBloc.close();
   }
 }

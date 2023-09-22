@@ -1,15 +1,18 @@
-import 'package:fitness_app_bloc/common_bloc/bloc_recipes/recipes_bloc.dart';
+import 'package:fitness_app_bloc/common_bloc/bloc_history/history_bloc.dart';
 import 'package:fitness_app_bloc/config/app_another.dart';
 import 'package:fitness_app_bloc/config/app_color.dart';
 import 'package:fitness_app_bloc/config/app_dimens.dart';
 import 'package:fitness_app_bloc/config/app_font.dart';
 import 'package:fitness_app_bloc/config/app_path.dart';
 import 'package:fitness_app_bloc/config/route_generator.dart';
-import 'package:fitness_app_bloc/screen/home_screen/widget/activity/gridview_activity_screen.dart';
-import 'package:fitness_app_bloc/screen/home_screen/widget/activity/pageview_action.dart';
-import 'package:fitness_app_bloc/screen/home_screen/widget/activity/pageview_recipes.dart';
+import 'package:fitness_app_bloc/screen/home_screen/tabs/widget/activity/gridview_activity_screen.dart';
+import 'package:fitness_app_bloc/screen/home_screen/tabs/widget/activity/pageview_action.dart';
+import 'package:fitness_app_bloc/screen/home_screen/tabs/widget/activity/pageview_recipes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+
+import '../../../../config/app_string.dart';
 
 class ActivityScreen extends StatelessWidget {
   const ActivityScreen({super.key});
@@ -17,6 +20,12 @@ class ActivityScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    final DateTime dateTime = DateTime.now();
+    final List<Map<String, Object?>> allHistory =
+        context.select((HistoryBloc bloc) => bloc.state.dataHistory);
+    int minute = getSecondOrExercise(allHistory, dateTime, true);
+    int exercise = getSecondOrExercise(allHistory, dateTime, false);
+
     return SafeArea(
       child: Scaffold(
           backgroundColor: AppColor.colorGrey1,
@@ -36,20 +45,11 @@ class ActivityScreen extends StatelessWidget {
             centerTitle: true,
             actions: [
               IconButton(
-                  onPressed: () async {},
+                  onPressed: () {},
                   icon: const Icon(
                     Icons.notifications_outlined,
                     color: AppColor.blackColor,
                   )),
-              BlocConsumer<RecipesBloc, RecipesState>(
-                listener: (context, state) {},
-                builder: (context, state) {
-                  return IconButton(
-                      onPressed: () async {},
-                      icon: const Icon(Icons.calendar_month_rounded,
-                          color: AppColor.blackColor));
-                },
-              )
             ],
           ),
           body: SingleChildScrollView(
@@ -119,7 +119,7 @@ class ActivityScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              Text('0 minute',
+                              Text('$minute minute',
                                   style: AppAnother.textStyleDefault(
                                       AppDimens.dimens_14,
                                       AppFont.normal,
@@ -147,7 +147,7 @@ class ActivityScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              Text('0 exercise',
+                              Text('$exercise exercise',
                                   style: AppAnother.textStyleDefault(
                                       AppDimens.dimens_14,
                                       AppFont.normal,
@@ -156,7 +156,10 @@ class ActivityScreen extends StatelessWidget {
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(RouteGenerator.historyTodayScreen);
+                          },
                           child: Row(children: <Widget>[
                             Text(
                               'Detail  ',
@@ -203,4 +206,31 @@ class ActivityScreen extends StatelessWidget {
           )),
     );
   }
+}
+
+int getSecondOrExercise(
+    List<Map<String, Object?>> allHistory, DateTime dateTime, bool isSecond) {
+  int exercise = 0;
+  int minute = 0;
+  if (allHistory.isNotEmpty) {
+    int second = 0;
+    for (int i = 0; i < allHistory.length; i++) {
+      if (DateFormat('dd/M/yyyy').format(
+              DateTime.parse(allHistory[i][AppString.dateTime] as String)) ==
+          DateFormat('dd/M/yyyy').format(dateTime)) {
+        second = (second +
+            DateTime.parse(allHistory[i]['DateTimeEnd'] as String)
+                .difference(
+                    DateTime.parse(allHistory[i][AppString.dateTime] as String))
+                .inSeconds);
+
+        exercise = exercise +
+            allHistory[i][AppString.exercise].toString().split(',').length -
+            1;
+      }
+    }
+    minute = second ~/ 60;
+  }
+
+  return isSecond ? minute : exercise;
 }

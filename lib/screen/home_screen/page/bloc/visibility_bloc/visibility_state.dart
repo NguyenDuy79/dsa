@@ -3,26 +3,43 @@
 part of 'visibility_bloc.dart';
 
 abstract class VisibilityState extends Equatable {
-  VisibilityState(this.exercise, this.set);
-  int set;
+  const VisibilityState(
+      this.exercise, this.set, this.setDrop, this.exerciseName);
+  final int setDrop;
+
+  final int set;
+
   final int exercise;
+  final String exerciseName;
 
   @override
-  List<Object> get props => [set, exercise];
+  List<Object> get props => [set, exercise, setDrop];
 }
 
 class VisibilityInitial extends VisibilityState {
-  VisibilityInitial(super.exercise, super.set);
+  const VisibilityInitial(
+      super.exercise, super.set, super.setDrop, super.exerciseName);
+  @override
+  List<Object> get props => [set, exercise, setDrop];
 }
 
 class PracticeState extends VisibilityState {
-  PracticeState(super.exercise, super.set);
+  const PracticeState(
+      super.exercise, super.set, super.setDrop, super.exerciseName);
+  @override
+  List<Object> get props => [set, exercise, setDrop];
 }
 
 class RestTimeState extends VisibilityState {
-  RestTimeState(super.exercise, super.set);
+  const RestTimeState(
+      super.exercise, super.set, super.setDrop, super.exericseName);
+
+  @override
+  List<Object> get props => [set, exercise, setDrop, exerciseName];
 }
 
 class DoneState extends VisibilityState {
-  DoneState(super.exercise, super.set);
+  const DoneState(super.exercise, super.set, super.setDrop, super.exerciseName);
+  @override
+  List<Object> get props => [set, exercise, setDrop];
 }

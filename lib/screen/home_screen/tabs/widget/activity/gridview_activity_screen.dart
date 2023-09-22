@@ -1,9 +1,11 @@
+import 'package:fitness_app_bloc/common_bloc/bloc_history/history_bloc.dart';
 import 'package:fitness_app_bloc/config/config.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
-import '../../../../common_bloc/bloc_activity/activity_bloc.dart';
+import '../../../../../common_bloc/bloc_activity/activity_bloc.dart';
 
 class GridViewActivity extends StatelessWidget {
   const GridViewActivity({super.key});
@@ -23,39 +25,95 @@ class GridViewActivity extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         semanticChildCount: 6,
         children: <Widget>[
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed(RouteGenerator.historyScreen);
+          BlocBuilder<ActivityBloc, ActivityState>(
+            builder: (context, state) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(RouteGenerator.historyScreen);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(AppDimens.dimens_15),
+                      color: AppColor.whiteColor),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: AppDimens.dimens_15,
+                      vertical: AppDimens.dimens_10),
+                  child: context
+                          .select((HistoryBloc bloc) => bloc.state.dataHistory)
+                          .isEmpty
+                      ? Column(
+                          children: [
+                            Text('History',
+                                style: AppAnother.textStyleDefault(
+                                    AppDimens.dimens_20,
+                                    AppFont.semiBold,
+                                    AppColor.blackColor)),
+                            Expanded(
+                              child: Image.asset(AppPath.empty),
+                            )
+                          ],
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text('History',
+                                style: AppAnother.textStyleDefault(
+                                    AppDimens.dimens_20,
+                                    AppFont.semiBold,
+                                    AppColor.blackColor)),
+                            Text(
+                                context
+                                    .select((HistoryBloc bloc) =>
+                                        bloc.state.dataHistory)
+                                    .last[AppString.methodExercise]
+                                    .toString(),
+                                style: AppAnother.textStyleDefault(
+                                    AppDimens.dimens_20,
+                                    AppFont.medium,
+                                    AppColor.darkgrey)),
+                            Expanded(
+                                child: Center(
+                                    child: Image.asset(
+                              context
+                                          .select((HistoryBloc bloc) =>
+                                              bloc.state.dataHistory)
+                                          .last[AppString.methodExercise]
+                                          .toString() ==
+                                      AppString.yoga
+                                  ? AppPath.yoga
+                                  : context
+                                              .select((HistoryBloc bloc) =>
+                                                  bloc.state.dataHistory)
+                                              .last[AppString.methodExercise]
+                                              .toString() ==
+                                          AppString.calisthenics
+                                      ? AppPath.calicthenics
+                                      : context
+                                                  .select((HistoryBloc bloc) =>
+                                                      bloc.state.dataHistory)
+                                                  .last[
+                                                      AppString.methodExercise]
+                                                  .toString() ==
+                                              AppString.inTheGym
+                                          ? AppPath.fitnessImage
+                                          : AppPath.cardio,
+                            ))),
+                            Text(
+                              DateFormat('M/dd').format(DateTime.parse(context
+                                  .select((HistoryBloc bloc) =>
+                                      bloc.state.dataHistory)
+                                  .last[AppString.dateTime]
+                                  .toString())),
+                              style: AppAnother.textStyleDefault(
+                                  AppDimens.dimens_15,
+                                  AppFont.normal,
+                                  AppColor.blackColor),
+                            )
+                          ],
+                        ),
+                ),
+              );
             },
-            child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppDimens.dimens_15),
-                  color: AppColor.whiteColor),
-              padding: const EdgeInsets.symmetric(
-                  horizontal: AppDimens.dimens_15,
-                  vertical: AppDimens.dimens_10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text('History',
-                      style: AppAnother.textStyleDefault(AppDimens.dimens_20,
-                          AppFont.semiBold, AppColor.blackColor)),
-                  Text('Strength',
-                      style: AppAnother.textStyleDefault(AppDimens.dimens_20,
-                          AppFont.medium, AppColor.darkgrey)),
-                  Expanded(
-                      child: Center(
-                          child: Image.asset(
-                    AppPath.fitnessImage,
-                  ))),
-                  Text(
-                    '5/12',
-                    style: AppAnother.textStyleDefault(AppDimens.dimens_15,
-                        AppFont.normal, AppColor.blackColor),
-                  )
-                ],
-              ),
-            ),
           ),
           GestureDetector(
             onTap: () {
@@ -65,8 +123,7 @@ class GridViewActivity extends StatelessWidget {
                 listener: (context, state) async {},
                 builder: (context, state) {
                   if (state is ActivityLoaded) {
-                    Map<String, Object?> value = state
-                        .activityResponse[state.activityResponse.length - 1];
+                    Map<String, Object?> value = state.activityResponse.last;
 
                     return Container(
                       decoration: BoxDecoration(
@@ -134,7 +191,7 @@ class GridViewActivity extends StatelessWidget {
                                 width: AppDimens.dimens_5,
                               ),
                               Text(
-                                '${AppString.weight}: ${value[AppString.weight]}',
+                                '${AppString.weight}: ${double.parse(value[AppString.weight].toString()).toStringAsFixed(1)}',
                                 style: AppAnother.textStyleDefault(
                                     AppDimens.dimens_18,
                                     AppFont.medium,

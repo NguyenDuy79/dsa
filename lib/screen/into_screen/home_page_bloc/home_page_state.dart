@@ -1,6 +1,6 @@
 part of 'home_page_bloc.dart';
 
-class HomePageState {
+class HomePageState extends Equatable {
   const HomePageState(
       {this.status = FormzSubmissionStatus.initial,
       this.age = '',
@@ -12,7 +12,10 @@ class HomePageState {
       this.height = 0,
       this.feet = 0,
       this.inch = 0,
-      this.weight = 0});
+      this.weight = 0,
+      this.isMetric = true,
+      this.temporary = '',
+      this.index = 0});
 
   final FormzSubmissionStatus status;
   final String dateTime;
@@ -22,7 +25,10 @@ class HomePageState {
   final int weight;
   final String activity;
   final int bodyFat;
+  final bool isMetric;
   final String target;
+  final int index;
+  final String temporary;
 
   final int feet;
   final int inch;
@@ -36,7 +42,10 @@ class HomePageState {
     int? bodyFat,
     int? height,
     int? feet,
+    bool? isMetric,
     int? inch,
+    String? temporary,
+    int? index,
     int? weight,
   }) {
     return HomePageState(
@@ -45,76 +54,40 @@ class HomePageState {
         bodyFat: bodyFat ?? this.bodyFat,
         age: age ?? this.age,
         feet: feet ?? this.feet,
+        index: index ?? this.index,
+        temporary: temporary ?? this.temporary,
         inch: inch ?? this.inch,
         gender: gender ?? this.gender,
         dateTime: dateTime ?? this.dateTime,
         height: height ?? this.height,
+        isMetric: isMetric ?? this.isMetric,
         weight: weight ?? this.weight,
         target: target ?? this.target);
   }
+
+  @override
+  List<Object?> get props => [
+        status,
+        dateTime,
+        activity,
+        gender,
+        target,
+        age,
+        bodyFat,
+        height,
+        feet,
+        inch,
+        index,
+        weight,
+        isMetric,
+        temporary,
+      ];
 }
 
 class HomePageInitial extends HomePageState {}
-
-class TabIndex extends HomePageState {
-  TabIndex();
-}
-
-class MetricChange extends HomePageState {
-  MetricChange();
-}
-
-// class GetFeet extends HomePageState {}
-
-// class GetInch extends HomePageState {}
 
 class PageViewChangeState extends HomePageState {}
 
 class SplashLoading extends HomePageState {}
 
 class SplashLoaded extends HomePageState {}
-
-// class Gender extends HomePageState {}
-
-// class GetActivity extends HomePageState {}
-
-// class TextChange extends HomePageState {}
-
-// class Submitted extends HomePageState {
-//   final FormzSubmissionStatus status;
-//   final String dateTime;
-//   final int age;
-//   final double height;
-//   final double weight;
-//   final String activity;
-//   final int bodyFat;
-//   final bool isValid;
-//   const Submitted(
-//       {this.status = FormzSubmissionStatus.initial,
-//       this.age = 0,
-//       this.activity = '',
-//       this.bodyFat = 0,
-//       this.dateTime = '',
-//       this.height = 0,
-//       this.isValid = false,
-//       this.weight = 0});
-//   Submitted copyWith(
-//       {FormzSubmissionStatus? status,
-//       String? dateTime,
-//       String? activity,
-//       int? age,
-//       int? bodyFat,
-//       double? height,
-//       double? weight,
-//       bool? isValid}) {
-//     return Submitted(
-//         status: status ?? this.status,
-//         activity: activity ?? this.activity,
-//         bodyFat: bodyFat ?? this.bodyFat,
-//         age: age ?? this.age,
-//         dateTime: dateTime ?? this.dateTime,
-//         height: height ?? this.height,
-//         isValid: isValid ?? this.isValid,
-//         weight: weight ?? this.weight);
-//   }
-
