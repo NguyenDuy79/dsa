@@ -54,12 +54,32 @@ class ChooseSet extends ActionEvent {
   const ChooseSet(this.value, this.index, this.lenght, this.exercise);
 }
 
+class ChooseSetCardio extends ActionEvent {
+  final String value;
+  const ChooseSetCardio(this.value);
+}
+
+class ChooseRestTimeCardio extends ActionEvent {
+  final String value;
+  const ChooseRestTimeCardio(this.value);
+}
+
+class ChooseTime extends ActionEvent {
+  final String value;
+  const ChooseTime(this.value);
+}
+
 class ChooseRestTime extends ActionEvent {
   final String value;
   final int index;
   final int lenght;
   final String exercise;
   const ChooseRestTime(this.value, this.index, this.lenght, this.exercise);
+}
+
+class Submit extends ActionEvent {
+  final bool submit;
+  const Submit(this.submit);
 }
 
 class ChooseRestTimeDrop extends ActionEvent {
@@ -86,4 +106,45 @@ class SetExercise extends ActionEvent {
 class IndexPage extends ActionEvent {
   final int index;
   const IndexPage(this.index);
+}
+
+class ChooseCardioMethod extends ActionEvent {
+  final String methodCardio;
+  const ChooseCardioMethod(this.methodCardio);
+}
+
+class ChooseHiitMethod extends ActionEvent {
+  final String method;
+  const ChooseHiitMethod(this.method);
+}
+
+class SetLevel extends ActionEvent {
+  final String level;
+  const SetLevel(this.level);
+}
+
+class UpdateCountLevel extends ActionEvent {}
+
+class ReturnCountLevel extends ActionEvent {}
+
+class ChooseExerciseHiitGroup extends ActionEvent {
+  final String exercise;
+  final int countLevel;
+  const ChooseExerciseHiitGroup(this.exercise, this.countLevel);
+}
+
+class UpdateExercise extends ActionEvent {
+  final int level;
+  const UpdateExercise(this.level);
+}
+
+class ResetField extends ActionEvent {}
+
+class ResetRemaining extends ActionEvent {}
+
+class ResetExerciseToNormal extends ActionEvent {}
+
+class LissCardioExercise extends ActionEvent {
+  final String exercise;
+  const LissCardioExercise(this.exercise);
 }

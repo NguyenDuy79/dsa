@@ -57,8 +57,14 @@ class CommonWidget {
     );
   }
 
-  static showDialogConfirm(BuildContext context, String title, String content,
-      String routeName, Map<String, dynamic> args, bool replace) {
+  static showDialogConfirm(
+    BuildContext context,
+    String title,
+    String content,
+    String routeName,
+    Map<String, dynamic> args,
+    bool replace,
+  ) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(

@@ -87,8 +87,11 @@ class AppString {
   static const methodExercise = 'ExerciseMethod';
   static const muscleGroup = 'muscleGroup';
   static const set = 'Set';
+  static const level = 'Level';
   static const restTime = 'RestTime';
   static const exercise = 'Exercise';
+  static const time = 'Time';
+
   static const rep = 'Rep';
   static const timeAtSet = 'TimeAtTheSet';
   static const male = 'Male';
@@ -114,13 +117,14 @@ class AppString {
   static const barbellShrugs = 'Barbell shrugs';
   static const fontRaise = 'Font raise';
   static const lateralRaise = 'Lateral raise';
-  static const shoulerPress = 'Shouler press';
+  static const shoulderPress = 'Shoulder press';
   static const pushPress = 'Push press';
   static const seatedBarbellShoulderPress = 'Seated barbell shoulder press';
   static const seatedDumbbellPress = 'Seated dumbell press';
   static const standingDumbbellPress = 'Standing dumbbell press';
   static const arnoldPress = 'Arnold press';
   static const scottPress = 'Scott press';
+  static const leteralRaiseMachine = 'Leteral raise machine';
   // nguc
   static const inclineBenchPress = 'Incline bench press';
   static const benchPress = 'Bench Press';
@@ -128,6 +132,10 @@ class AppString {
   static const declineBenchPress = 'Deline bench press';
   static const dumbbellBenchPress = 'Dumbbell bench press';
   static const dumbbellInclinePress = 'Dumbbell inchline press';
+  static const cableCrossOver = 'Cable cross over';
+  static const flies = 'Flise';
+  static const pecDeckMachine = 'Pec deck machine';
+  static const chestPressMachine = 'Chest press machine';
   // lung
   static const chinUps = 'Chin ups';
   static const pullUp = 'Pull ups';
@@ -140,6 +148,12 @@ class AppString {
   static const cornerRows = 'Corner rows';
   static const invertedBarRow = 'Inverted bar row';
   static const facePull = 'Face pull';
+  static const straightArmsPulldown = 'Straight arms pulldown';
+  static const cablePullover = 'Cable pullover';
+  static const machineSeatedRow = 'Machine seated row';
+  static const machineLatPulldowmn = 'Machine lat pulldowmn';
+  static const machineRearDelt = 'Machine rear delt';
+  static const rearDeltDumbbellFly = 'Rear delt dumbbell fly';
   // tay trc
   static const standingBarbellCurl = 'Standing barbell curl';
   static const preacherCurl = 'Preacher curl';
@@ -148,6 +162,9 @@ class AppString {
   static const preacherDumbbellCurl = 'Peacher dumbbell curl';
   static const reverseBarbellCurl = 'Reverse barbell curl';
   static const zottmanCurl = 'Zottman curl';
+  static const machineCurl = 'Machine curl';
+  static const cableCurl = 'Cable curl';
+  static const cancentrationCurl = 'Cancentration curl';
   // tay sau
   static const closeGripBenchPress = 'Close grip bench press ';
   static const closeGripDeclinePress = 'Cloese Grip Decline Press';
@@ -160,6 +177,12 @@ class AppString {
   static const declineDumbbellTricepsExtension =
       'Decline dumbbell tricpes extension';
   static const flatBarbellTricepsExtention = 'Flat barbell triceps extention';
+  static const overHeadDumbbellTricepsExtension =
+      'Overhead dumbbell triceps extension';
+  static const overheadBarTricepsExtension = 'Overhead bar triceps extension';
+  static const cableTricepsExtension = 'Cable triceps extension';
+  static const tricepsExtensionMachines = 'Triceps extension machines';
+
   // dui truoc
   static const lowbarSquat = 'Low bar squat';
   static const heightbarSquat = 'Hight bar squat';
@@ -169,6 +192,10 @@ class AppString {
   static const barbellHackSquat = 'Barbell hack squat';
   static const legPress = 'Leg press';
   static const dumbbellSquat = 'Dumbbell squat';
+  static const machineHackSquat = 'Machine hack squat';
+  static const sissySquat = 'Sissy squat';
+  static const stepUp = 'Step up';
+  static const legExtension = 'Leg extension';
   //dui sau
   static const deadlift = 'Deadlift';
   static const romanianDeadlift = 'Romanian deadlift';
@@ -177,4 +204,72 @@ class AppString {
   static const snatchGripDeadlift = 'Snatch Grip Deadlift';
   static const goodMorning = 'Good morning';
   static const gluteHamRaise = 'Glute ham raise';
+  static const reverseHyper = 'Reverse hyper';
+  static const pullThrough = 'Pull through';
+  static const legCurl = 'Leg curl';
+  static const cableHipExtension = 'Cable hip extension';
+  //
+  static const lissCardio = 'Liss cardio';
+  static const hittCardio = 'Hitt cardio';
+  static const onSiteExercises = 'Onsite exercises';
+  static const joggingOutdoors = 'Jogging outdoors';
+  static const joggingIndoors = 'Jogging indoors';
+  static const walkingOutdoors = 'Walking outndoors';
+  static const walkingIndoors = 'Walking indoors';
+  static const cyclingOutdoors = 'Cycling outdoors';
+  static const cyclingIndoors = 'Cycling indoors';
+  static const rowingMachine = 'Rowing machine';
+  static const ropeJumping = 'Rope jumping';
+  static const swim = 'Swim';
+  static const jumpingJack = 'Jumping jack';
+  static const highKnees = 'High knees';
+  static const burpee = 'Burpee';
+  static const jumpSquat = 'Jump squat';
+  static const mountainClimbing = 'Mountain climbing';
+  static const jumpingLunge = 'Jumping lunge';
+  static const sideSkater = 'Side skater';
+  static const kettlebellSwing = 'KettlebellSwing';
+  static const plankJack = 'Plank jack';
+  static const sidePlank = 'Side plank';
+  static const pushUps = 'Push ups';
+  static const sideJackknife = 'Side jackknife';
+  static const russianTwist = 'Russian Twist';
+  static const trxPullup = 'TRX pull-up';
+  static const inchWorms = 'Inchworms';
+  static const halos = 'Halos';
+  static const plankHold = 'Plank hold';
+  static const squats = 'squats';
+  static const fastFeet = 'Fast feet';
+  static const halfBurpees = 'Half burpees';
+  static const squatThrust = 'Squat thrust';
+  static const jumpingSplitSquat = 'jumpingSplitSquat';
+  static const bulgarianSplitSquat = 'Bulgarian split squat';
+  static const strandardPushup = 'Strandard push-up';
+  static const toeTap = 'Toe tap';
+  static const starJump = 'Star jump';
+  static const powerJack = 'Power jack';
+  static const londonBridge = 'London Bridge';
+  static const handWalkOut = 'Hand walk-out';
+  static const buttKick = 'Butt kick';
+  static const seatedInOut = 'Seated in out';
+  static const chairSitups = 'Chair situps';
+  static const chairCrunches = 'ChairCrunches';
+  static const layKneeRaises = 'Lay knee raises';
+  static const reachups = 'Reachups';
+  static const starCrunch = 'Star crunch';
+  static const bicycles = 'Bicycles';
+  static const boltHold = 'Bolt hold';
+  static const seatedLegFlutter = 'Seated leg flutter';
+  static const crucifix = 'Crucifix';
+  static const alternatingSingleLegRaise = 'Alternating single leg raise';
+  static const layingLegRaise = 'Laying leg raise';
+  static const staticHold = 'Static hold';
+  static const toeTouches = 'Toe touches';
+  static const inOutClose = 'In out close';
+  static const switchingMountedClimbers = 'Switching mounted cliimbers';
+  static const plankAlternatingToeTops = 'Plank alternating toe tops';
+  static const plankKneeToElbows = 'Plank knee to elbows';
+  static const plankPushUp = 'Plank push up';
+  static const sidePlankRaises = 'Side plank raises';
+  static const highPlankToeTaps = 'High plank toe taps';
 }

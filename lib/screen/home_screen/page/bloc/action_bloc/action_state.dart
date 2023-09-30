@@ -8,7 +8,13 @@ class ActionState extends Equatable {
       this.restTime = '',
       this.temporaryDropset = '',
       this.temporarySuperset = '',
-      this.set = ''});
+      this.cardioMethod ='',
+      this.hiitMethod ='',
+      this.level ='',
+      this.set = '', 
+      this.countLevel =0,
+      this.time ='',
+      this.submit =false});
   final String method;
   final String muscleGroup;
   final String exercise;
@@ -16,15 +22,13 @@ class ActionState extends Equatable {
   final String restTime;
   final String temporarySuperset;
   final String temporaryDropset;
-  //  List<int> get validSet {
-  //   List<int> value = [];
-  //   for (int i = 0; i <= set.split(',').length - 1; i++) {
-  //     if (set.split(',')[i] == '') {
-  //       value.add(i);
-  //     }
-  //   }
-  //   return value;
-  // }
+  final String cardioMethod;
+  final String hiitMethod;
+  final String level;
+  final bool submit;
+  final int countLevel;
+  final String time;
+  
 
   ActionState copyWith(
       {String? method,
@@ -33,14 +37,26 @@ class ActionState extends Equatable {
       String? restTime,
       String? temporarySuperset,
       String? temporaryDropset,
+      String? cardioMethod,
+      String? hiitMethod,
+      String? level,
+      bool? submit,
+      String? time,
+      int? countLevel,
       String? set}) {
     return ActionState(
         method: method ?? this.method,
         exercise: exercise ?? this.exercise,
+        countLevel: countLevel ?? this.countLevel,
         muscleGroup: muscleGroup ?? this.muscleGroup,
+        cardioMethod: cardioMethod?? this.cardioMethod,
         restTime: restTime ?? this.restTime,
         temporaryDropset: temporaryDropset ?? this.temporaryDropset,
         temporarySuperset: temporarySuperset ?? this.temporarySuperset,
+        hiitMethod: hiitMethod ?? this.hiitMethod,
+        level: level ?? this.level,
+        submit: submit ?? this.submit,
+        time: time  ?? this.time,
         set: set ?? this.set);
   }
 
@@ -52,7 +68,10 @@ class ActionState extends Equatable {
         restTime,
         set,
         temporaryDropset,
-        temporarySuperset
+        cardioMethod,
+        temporarySuperset,
+        level,
+        hiitMethod, submit,countLevel, time
       ];
 }
 

@@ -56,6 +56,14 @@ class DbHistoryRepository {
       ''', [set, duration, id]);
   }
 
+  Future<void> updateExercise(int id, String exercise) async {
+    final sqlDb = await DbHelper().database();
+    await sqlDb.rawUpdate('''UPDATE ${AppString.repTimeTable}
+          SET ${AppString.exercise} =?
+          WHERE ${AppString.id} =?
+    ''', [exercise, id]);
+  }
+
   Future<void> updateSetAndTime(
     String rep,
     String weight,

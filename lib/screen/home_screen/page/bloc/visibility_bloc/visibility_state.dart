@@ -23,6 +23,13 @@ class VisibilityInitial extends VisibilityState {
   List<Object> get props => [set, exercise, setDrop];
 }
 
+class PracticeCardioState extends VisibilityState {
+  const PracticeCardioState(
+      super.exercise, super.set, super.setDrop, super.exerciseName);
+  @override
+  List<Object> get props => [set, exercise, setDrop];
+}
+
 class PracticeState extends VisibilityState {
   const PracticeState(
       super.exercise, super.set, super.setDrop, super.exerciseName);

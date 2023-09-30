@@ -77,10 +77,11 @@ class RouteGenerator {
           ], child: const HomeScreen()),
         );
       case setupExerciseScreen:
+        var args = settings.arguments as Map<String, Object?>;
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) => ActionBloc(),
-                  child: SetupExerciseScreen(),
+                  child: SetupExerciseScreen(args),
                 ));
       case actionScreen:
         var args = settings.arguments as Map<String, dynamic>;
@@ -99,12 +100,14 @@ class RouteGenerator {
               )
             ],
             child: ActionScreen(
-              args['method'],
-              args['exercise'],
-              args['muscle group'],
-              args['rest time'],
-              args['set'],
-            ),
+                args['method'],
+                args['exercise'],
+                args['muscle group'],
+                args['rest time'],
+                args['set'],
+                args['cardioMethod'],
+                args['hiitMethod'],
+                args['time']),
           ),
         );
       case informationScreen:

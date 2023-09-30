@@ -340,7 +340,7 @@ class EnterInfomation extends StatelessWidget {
                             context
                                 .read<HomePageBloc>()
                                 .add(OnChangeHeight(value.trim()));
-                          })),
+                          }, null)),
                         if (!context.read<HomePageBloc>().isMetric)
                           BlocBuilder<HomePageBloc, HomePageState>(
                             buildWhen: (previous, current) =>
@@ -541,7 +541,7 @@ class EnterInfomation extends StatelessWidget {
                           context
                               .read<HomePageBloc>()
                               .add(OnChangeWeight(value.trim()));
-                        }))
+                        }, null))
                       ],
                     ),
                   ),
@@ -677,7 +677,7 @@ class EnterInfomation extends StatelessWidget {
                           context
                               .read<HomePageBloc>()
                               .add(OnChangeBodyFat(value.trim()));
-                        })),
+                        }, null)),
                       ],
                     ),
                   ),

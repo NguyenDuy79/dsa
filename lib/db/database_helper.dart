@@ -24,17 +24,19 @@ class DbHelper {
           '${AppString.id} INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,'
           '${AppString.dateTime} TEXT NOT NULL,'
           'DateTimeEnd TEXT NOT NULL,'
+          '${AppString.time} TEXT ,'
           '${AppString.methodExercise} TEXT NOT NULL,'
           '${AppString.exercise} TEXT NOT NULL,'
-          '${AppString.restTime} TEXT NOT NULL)');
+          '${AppString.restTime} TEXT )');
       await db.execute('CREATE TABLE ${AppString.repTimeTable}('
           '${AppString.id} INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'
           '${AppString.dateTime} TEXT NOT NULL,'
           '${AppString.exercise} TEXT NOT NULL,'
           '${AppString.setNumber} TEXT NOT NULL,'
-          '${AppString.weight} TEXT NOT NULL,'
-          '${AppString.timeAtSet} TEXT NOT NULL,'
-          '${AppString.rep} TEXT NOT NULL)');
+          '${AppString.weight} TEXT,'
+          '${AppString.timeAtSet} TEXT ,'
+          '${AppString.level} TEXT,'
+          '${AppString.rep} TEXT )');
     }, version: 1);
   }
 

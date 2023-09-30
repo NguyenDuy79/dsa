@@ -46,7 +46,6 @@ class AddInformationScreen extends StatelessWidget {
                   previous.isMetric != current.isMetric ||
                   previous.status != current.status,
               builder: (context, state) {
-                print('lol mne');
                 return Column(children: <Widget>[
                   Row(
                     children: <Widget>[
@@ -87,7 +86,7 @@ class AddInformationScreen extends StatelessWidget {
                             context
                                 .read<HomePageBloc>()
                                 .add(OnChangeHeight(value.trim()));
-                          })),
+                          }, null)),
                         if (!context.read<HomePageBloc>().isMetric)
                           BlocBuilder<HomePageBloc, HomePageState>(
                             buildWhen: (previous, current) =>
@@ -288,7 +287,7 @@ class AddInformationScreen extends StatelessWidget {
                           context
                               .read<HomePageBloc>()
                               .add(OnChangeWeight(value.trim()));
-                        }))
+                        }, null))
                       ],
                     ),
                   ),
@@ -424,7 +423,7 @@ class AddInformationScreen extends StatelessWidget {
                           context
                               .read<HomePageBloc>()
                               .add(OnChangeBodyFat(value.trim()));
-                        })),
+                        }, null)),
                       ],
                     ),
                   ),

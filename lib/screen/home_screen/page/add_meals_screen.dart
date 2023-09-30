@@ -562,7 +562,7 @@ Widget addField(BuildContext context) {
             Expanded(
                 child: WidgetReused.textFieldWidget('gram', (value) {
               context.read<AddMealsBloc>().add(OnChangeWeightMeals(value));
-            }))
+            }, null))
           ],
         ),
       ),

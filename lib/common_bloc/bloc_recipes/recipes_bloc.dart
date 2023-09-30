@@ -61,7 +61,8 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
     } else if (DateFormat('dd-MM-yyyy')
             .format(DateTime.parse(LocalPref.getString(AppString.dateTime)!)) !=
         DateFormat('dd-MM-yyyy').format(event.dateTime)) {
-      await DbRecipes().insert(AppString.recipesPerdayTable, {
+          if(data.isNotEmpty){
+await DbRecipes().insert(AppString.recipesPerdayTable, {
         AppString.dateTime: DateFormat('dd-MM-yyyy')
             .format(DateTime.parse(LocalPref.getString(AppString.dateTime)!)),
         AppString.calories:
@@ -102,6 +103,8 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
         'twenty_two': LocalPref.getInt('22')!,
         'twenty_three': LocalPref.getInt('23')!
       });
+          }
+      
 
       LocalPref.setString(AppString.dateTime, event.dateTime.toString());
       LocalPref.setDouble(AppString.calories, 0);

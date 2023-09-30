@@ -24,4 +24,13 @@ class VisibilityAdd extends VisibilityEvent {
 
 class VisibilityReset extends VisibilityEvent {}
 
+class PracticeCardioEvent extends VisibilityEvent {
+  final int exercise;
+  final int set;
+  final int level;
+  const PracticeCardioEvent(this.exercise, this.set, this.level);
+}
+
+class DoneEvent extends VisibilityEvent {}
+
 class RestTimeEvent extends VisibilityEvent {}

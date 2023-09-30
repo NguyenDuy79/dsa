@@ -22,6 +22,36 @@ class MethodReused {
     }
   }
 
+  static String? textError(String value, String hint, int number) {
+    if (value.isEmpty) {
+      return 'Please enter the $hint';
+    } else if (value.contains(',') ||
+        value.contains(' ') ||
+        value.contains('-') ||
+        value.contains('.')) {
+      return 'Please enter the number';
+    } else if (int.parse(value) < number) {
+      return 'Please enter the $hint bigger than $number';
+    } else {
+      return null;
+    }
+  }
+
+  static String formatTime(int duration) {
+    Duration value = Duration(seconds: duration);
+
+    final hours = value.inHours.remainder(24).toString().padLeft(2, '0');
+
+    final minutes = value.inMinutes.remainder(60).toString().padLeft(2, '0');
+    final seconds = value.inSeconds.remainder(60).toString().padLeft(2, '0');
+
+    if (value.inHours > 0) {
+      return '$hours:$minutes:$seconds';
+    } else {
+      return '$minutes:$seconds';
+    }
+  }
+
   static String filterDouble(String value) {
     if (value.split('.')[1] == '0') {
       return value.split('.')[0];
@@ -389,7 +419,7 @@ class MethodReused {
       back = MethodReused.listExercise(
           AppAnother.backExercise, exercise.split(','));
       chest = MethodReused.listExercise(
-          AppAnother.chestExcercise, exercise.split(','));
+          AppAnother.chestExercise, exercise.split(','));
       shoulder = MethodReused.listExercise(
           AppAnother.shoulderExercise, exercise.split(','));
       arm = MethodReused.listExercise(

@@ -5,6 +5,7 @@ part 'action_state.dart';
 
 class ActionBloc extends Bloc<ActionEvent, ActionState> {
   int index = 0;
+
   ActionBloc() : super(ActionInitial()) {
     on<ChooseExerciseMethod>(_chooseExerciseMethod);
     on<ChooseMuscleGroupSelection>(_addMuscleGroup);
@@ -21,7 +22,149 @@ class ActionBloc extends Bloc<ActionEvent, ActionState> {
     on<IndexPage>(_changeIndex);
     on<ChooseSetDrop>(_addSetDrop);
     on<ChooseRestTimeDrop>(_addRestDrop);
+    on<ChooseCardioMethod>(_chooseCardioMethod);
+    on<ChooseHiitMethod>(_chooseHiitMethod);
+    on<SetLevel>(_setLevel);
+    on<Submit>(_submit);
+    on<UpdateCountLevel>(_updateCountLevel);
+    on<UpdateExercise>(_updateExercise);
+    on<ChooseExerciseHiitGroup>(_chooseExerciseHiitGroup);
+    on<ResetField>(_resetField);
+    on<ResetRemaining>(_resetRemaining);
+    on<ReturnCountLevel>(_returnCountLevel);
+    on<ResetExerciseToNormal>(_resetExerciseToNomal);
+    on<ChooseRestTimeCardio>(_chooseRestTimeCardio);
+    on<ChooseSetCardio>(_chooseSetCardio);
+    on<ChooseTime>(_chooseTime);
+    on<LissCardioExercise>(_lissCardio);
   }
+  void _lissCardio(LissCardioExercise event, Emitter<ActionState> emit) {
+    emit(state.copyWith(exercise: event.exercise));
+  }
+
+  void _chooseTime(ChooseTime event, Emitter<ActionState> emit) {
+    emit(state.copyWith(time: event.value));
+  }
+
+  void _chooseSetCardio(ChooseSetCardio event, Emitter<ActionState> emit) {
+    emit(state.copyWith(set: event.value));
+  }
+
+  void _chooseRestTimeCardio(
+      ChooseRestTimeCardio event, Emitter<ActionState> emit) {
+    emit(state.copyWith(restTime: event.value));
+  }
+
+  void _resetExerciseToNomal(
+      ResetExerciseToNormal event, Emitter<ActionState> emit) {
+    String newExercise = '';
+    for (int i = 0; i < state.exercise.split(',').length - 1; i++) {
+      if (state.exercise.split(',')[i].contains(':')) {
+        if (state.exercise.split(',')[i].split(':')[1].contains(';')) {
+          for (int j = 0;
+              j <
+                  state.exercise.split(',')[i].split(':')[1].split(';').length -
+                      1;
+              j++) {
+            newExercise =
+                '$newExercise${state.exercise.split(',')[i].split(':')[1].split(';')[j]},';
+          }
+        } else {
+          newExercise =
+              '$newExercise${state.exercise.split(',')[i].split(':')[1]},';
+        }
+      } else {
+        newExercise = '$newExercise${state.exercise.split(',')[i]},';
+      }
+    }
+    emit(state.copyWith(exercise: newExercise));
+  }
+
+  void _returnCountLevel(ReturnCountLevel event, Emitter<ActionState> emit) {
+    emit(state.copyWith(countLevel: state.countLevel - 1));
+  }
+
+  void _resetRemaining(ResetRemaining event, Emitter<ActionState> emit) {
+    emit(state.copyWith(exercise: '', muscleGroup: ''));
+  }
+
+  void _resetField(ResetField event, Emitter<ActionState> emit) {
+    emit(state.copyWith(time: '', restTime: '', set: '', submit: false));
+  }
+
+  void _chooseExerciseHiitGroup(
+      ChooseExerciseHiitGroup event, Emitter<ActionState> emit) {
+    String exercise = '';
+    if (state.exercise.split(':')[event.countLevel].contains(event.exercise)) {
+      for (int i = 0; i < state.exercise.split(':').length; i++) {
+        if (i == event.countLevel) {
+          if (i == state.exercise.split(':').length - 1) {
+            exercise =
+                '$exercise${state.exercise.split(':')[i].replaceAll('${event.exercise},', '')}';
+          } else {
+            exercise =
+                '$exercise${state.exercise.split(':')[i].replaceAll('${event.exercise},', '')}:';
+          }
+        } else {
+          if (i == state.exercise.split(':').length - 1) {
+            exercise = exercise + state.exercise.split(':')[i];
+          } else {
+            exercise = '$exercise${state.exercise.split(':')[i]}:';
+          }
+        }
+      }
+      emit(state.copyWith(exercise: exercise));
+    } else {
+      for (int i = 0; i < state.exercise.split(':').length; i++) {
+        if (i == event.countLevel) {
+          if (i == state.exercise.split(':').length - 1) {
+            exercise =
+                '$exercise${state.exercise.split(':')[i]}${event.exercise},';
+          } else {
+            exercise =
+                '$exercise${state.exercise.split(':')[i]}${event.exercise},:';
+          }
+        } else {
+          if (i == state.exercise.split(':').length - 1) {
+            exercise = exercise + state.exercise.split(':')[i];
+          } else {
+            exercise = '$exercise${state.exercise.split(':')[i]}:';
+          }
+        }
+      }
+      emit(state.copyWith(exercise: exercise));
+    }
+  }
+
+  void _updateExercise(UpdateExercise event, Emitter<ActionState> emit) {
+    String value = '';
+    for (int i = 0; i < event.level - 1; i++) {
+      value = '$value:';
+    }
+    emit(state.copyWith(exercise: value));
+  }
+
+  void _updateCountLevel(UpdateCountLevel event, Emitter<ActionState> emit) {
+    emit(state.copyWith(countLevel: state.countLevel + 1));
+  }
+
+  void _submit(Submit event, Emitter<ActionState> emit) {
+    emit(state.copyWith(submit: event.submit));
+  }
+
+  void _setLevel(SetLevel event, Emitter<ActionState> emit) {
+    emit(state.copyWith(level: event.level));
+  }
+
+  void _chooseHiitMethod(ChooseHiitMethod event, Emitter<ActionState> emit) {
+    emit(state.copyWith(hiitMethod: event.method));
+  }
+
+  void _chooseCardioMethod(
+      ChooseCardioMethod event, Emitter<ActionState> emit) {
+    emit(state.copyWith(cardioMethod: event.methodCardio));
+  }
+
   void _changeIndex(IndexPage event, Emitter<ActionState> emit) {
     index = event.index;
   }

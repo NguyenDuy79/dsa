@@ -1,3 +1,4 @@
+import 'package:fitness_app_bloc/common_bloc/bloc_anlytics/analytics_bloc.dart';
 import 'package:fitness_app_bloc/common_bloc/bloc_history/history_bloc.dart';
 import 'package:fitness_app_bloc/config/app_another.dart';
 import 'package:fitness_app_bloc/config/app_color.dart';
@@ -25,7 +26,7 @@ class ActivityScreen extends StatelessWidget {
         context.select((HistoryBloc bloc) => bloc.state.dataHistory);
     int minute = getSecondOrExercise(allHistory, dateTime, true);
     int exercise = getSecondOrExercise(allHistory, dateTime, false);
-
+    Map<String,Object?> currentData = context.select((AnalyticsBloc bloc) => bloc.state.currentData);
     return SafeArea(
       child: Scaffold(
           backgroundColor: AppColor.colorGrey1,
@@ -81,7 +82,7 @@ class ActivityScreen extends StatelessWidget {
                           backgroundColor: AppColor.greenColor1),
                       onPressed: () {
                         Navigator.of(context)
-                            .pushNamed(RouteGenerator.setupExerciseScreen);
+                            .pushNamed(RouteGenerator.setupExerciseScreen,arguments: currentData);
                       },
                       child: SizedBox(
                           height: AppDimens.dimens_90,

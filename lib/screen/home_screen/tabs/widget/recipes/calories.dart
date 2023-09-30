@@ -74,6 +74,7 @@ class CaloriesWidget extends StatelessWidget {
                                         .inDays ==
                                     0
                                 ? SingleChildScrollView(
+                                  physics: const NeverScrollableScrollPhysics(),
                                     child: caloriesWidgetToday(
                                         state,
                                         controllerFat,
@@ -639,6 +640,7 @@ Widget caloriesWidgetToday(
   return Container(
     padding: const EdgeInsets.only(top: AppDimens.dimens_20),
     child: Column(
+      
       children: [
         Stack(
           children: <Widget>[

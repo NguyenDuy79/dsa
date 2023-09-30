@@ -145,7 +145,7 @@ Widget dayWidget(
                 List<String> back = MethodReused.listExercise(
                     AppAnother.backExercise, exercise.split(','));
                 List<String> chest = MethodReused.listExercise(
-                    AppAnother.chestExcercise, exercise.split(','));
+                    AppAnother.chestExercise, exercise.split(','));
                 List<String> shoulder = MethodReused.listExercise(
                     AppAnother.shoulderExercise, exercise.split(','));
                 List<String> arm = MethodReused.listExercise(
@@ -182,7 +182,7 @@ double getDouble(String value) {
     List<String> back =
         MethodReused.listExercise(AppAnother.backExercise, exercise.split(','));
     List<String> chest = MethodReused.listExercise(
-        AppAnother.chestExcercise, exercise.split(','));
+        AppAnother.chestExercise, exercise.split(','));
     List<String> shoulder = MethodReused.listExercise(
         AppAnother.shoulderExercise, exercise.split(','));
     List<String> arm =

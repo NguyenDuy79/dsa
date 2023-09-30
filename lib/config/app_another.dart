@@ -40,24 +40,45 @@ class AppAnother {
     AppString.arm,
     AppString.legAndGlutes,
   ];
-  static const List<String> chestExcercise = [
-    AppString.inclineBenchPress,
-    AppString.benchPress,
-    AppString.dips
-  ];
+
   static const Map<String, List<String>> exercise = {
-    AppString.chest: chestExcercise,
+    AppString.chest: chestExercise,
     AppString.back: backExercise,
     AppString.legAndGlutes: legAndGlutesExercise,
     AppString.shoulder: shoulderExercise,
     AppString.arm: armExercise
   };
+  static const List<String> chestExercise = [
+    AppString.inclineBenchPress,
+    AppString.benchPress,
+    AppString.dips,
+    AppString.declineBenchPress,
+    AppString.dumbbellBenchPress,
+    AppString.dumbbellInclinePress,
+    AppString.cableCrossOver,
+    AppString.flies,
+    AppString.pecDeckMachine,
+    AppString.chestPressMachine
+  ];
+
   static const List<String> backExercise = [
     AppString.chinUps,
     AppString.pullUp,
     AppString.chestSupportedRowing,
     AppString.bentOverBarbellRowing,
-    AppString.tbarRow
+    AppString.tbarRow,
+    AppString.oneArmDumbbellRow,
+    AppString.latPullDownVariations,
+    AppString.cableSeatedRowingVariations,
+    AppString.cornerRows,
+    AppString.invertedBarRow,
+    AppString.facePull,
+    AppString.straightArmsPulldown,
+    AppString.cablePullover,
+    AppString.machineSeatedRow,
+    AppString.machineLatPulldowmn,
+    AppString.machineRearDelt,
+    AppString.rearDeltDumbbellFly,
   ];
   static const List<String> shoulderExercise = [
     AppString.barbellShoulderPress,
@@ -65,29 +86,140 @@ class AppAnother {
     AppString.fontRaise,
     AppString.lateralRaise,
     AppString.cableUprightRow,
-    AppString.frontCableRaise
+    AppString.frontCableRaise,
+    AppString.smithMachineOverheadShoulderPress,
+    AppString.pushPress,
+    AppString.shoulderPress,
+    AppString.seatedBarbellShoulderPress,
+    AppString.seatedDumbbellPress,
+    AppString.standingDumbbellPress,
+    AppString.arnoldPress,
+    AppString.scottPress
   ];
   static const List<String> armExercise = [
     AppString.closeGripBenchPress,
     AppString.closeGripDeclinePress,
+    AppString.tricepsDips,
+    AppString.closeGripInclinePress,
+    AppString.reverseGripBenchPress,
+    AppString.jmPress,
+    AppString.declineBarbellTricepsExtension,
+    AppString.declineDumbbellTricepsExtension,
+    AppString.flatBarbellTricepsExtention,
+    AppString.overHeadDumbbellTricepsExtension,
+    AppString.overheadBarTricepsExtension,
+    AppString.cableTricepsExtension,
+    AppString.tricepsExtensionMachines,
+    //
     AppString.standingBarbellCurl,
-    AppString.preacherCurl
+    AppString.preacherCurl,
+    AppString.hammerCurl,
+    AppString.seatedDumbbellCurl,
+    AppString.preacherDumbbellCurl,
+    AppString.reverseBarbellCurl,
+    AppString.zottmanCurl,
+    AppString.machineCurl,
+    AppString.cableCurl,
+    AppString.cancentrationCurl
   ];
 
   static const List<String> legAndGlutesExercise = [
     AppString.lowbarSquat,
     AppString.heightbarSquat,
     AppString.frontSquat,
+    AppString.lunges,
+    AppString.splitSquad,
+    AppString.barbellHackSquat,
+    AppString.legPress,
+    AppString.dumbbellSquat,
+    AppString.machineHackSquat,
+    AppString.sissySquat,
+    AppString.stepUp,
+    AppString.legExtension,
+    //
     AppString.deadlift,
     AppString.romanianDeadlift,
     AppString.sumoDeadlift,
-    AppString.stiffLegDeadlift
+    AppString.stiffLegDeadlift,
+    AppString.snatchGripDeadlift,
+    AppString.goodMorning,
+    AppString.gluteHamRaise,
+    AppString.reverseHyper,
+    AppString.pullThrough,
+    AppString.legCurl,
+    AppString.cableHipExtension
   ];
   static const List<String> exerciseMethod = [
     AppString.yoga,
     AppString.inTheGym,
     AppString.calisthenics,
     AppString.cardio,
+  ];
+  static const List<String> cardioMethod = [
+    AppString.lissCardio,
+    AppString.hittCardio
+  ];
+  static const List<String> lissCardioExercise = [
+    AppString.joggingIndoors,
+    AppString.joggingOutdoors,
+    AppString.walkingIndoors,
+    AppString.walkingOutdoors,
+    AppString.cyclingIndoors,
+    AppString.cyclingOutdoors,
+    AppString.rowingMachine,
+    AppString.ropeJumping,
+    AppString.swim
+  ];
+  static const List<String> cardioExerciseShare = [
+    AppString.jumpingJack,
+    AppString.highKnees,
+    AppString.burpee,
+    AppString.jumpSquat,
+    AppString.mountainClimbing,
+    AppString.jumpingLunge,
+    AppString.sideSkater,
+    AppString.kettlebellSwing,
+    AppString.plankJack,
+    AppString.sidePlank,
+    AppString.pushUps,
+    AppString.sideJackknife,
+    AppString.russianTwist,
+    AppString.trxPullup,
+    AppString.inchWorms,
+    AppString.halos,
+    AppString.plankHold,
+    AppString.squats,
+    AppString.fastFeet,
+    AppString.halfBurpees,
+    AppString.squatThrust,
+    AppString.jumpingSplitSquat,
+    AppString.bulgarianSplitSquat,
+    AppString.strandardPushup,
+    AppString.toeTap,
+    AppString.starJump,
+    AppString.powerJack,
+    AppString.londonBridge,
+    AppString.handWalkOut,
+    AppString.buttKick,
+    AppString.seatedInOut,
+    AppString.chairSitups,
+    AppString.layingLegRaise,
+    AppString.reachups,
+    AppString.starCrunch,
+    AppString.bicycles,
+    AppString.boltHold,
+    AppString.seatedLegFlutter,
+    AppString.crucifix,
+    AppString.alternatingSingleLegRaise,
+    AppString.staticHold,
+    AppString.toeTouches,
+    AppString.inOutClose,
+    AppString.switchingMountedClimbers,
+    AppString.plankAlternatingToeTops,
+    AppString.plankKneeToElbows,
+    AppString.plankPushUp,
+    AppString.sidePlankRaises,
+    AppString.highPlankToeTaps
   ];
 
   static List<BottomNavigationBarItem> bottomNavItems =

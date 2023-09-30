@@ -452,12 +452,42 @@ class WidgetReused {
     );
   }
 
-  static Widget textFieldWidget(String hint, Function(String value) funtion) {
+  static Widget textFieldWidget(
+      String hint, Function(String value) funtion, String? errorText) {
     return TextField(
         style: AppAnother.textStyleDefault(
             AppDimens.dimens_20, AppFont.normal, AppColor.blackColor),
         onChanged: (value) {
           funtion(value);
+        },
+        cursorColor: AppColor.blackColor,
+        maxLines: 1,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+            errorText: errorText,
+            hintText: hint,
+            contentPadding: const EdgeInsets.only(left: AppDimens.dimens_20),
+            enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: AppColor.colorGrey3),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(AppDimens.dimens_10))),
+            focusedBorder: const OutlineInputBorder(
+                borderRadius:
+                    BorderRadius.all(Radius.circular(AppDimens.dimens_10)),
+                borderSide: BorderSide(color: AppColor.blackColor))));
+  }
+
+  static Widget textFormFieldWidget(String hint, Function(String value) funtion,
+      Function(String value) errorText) {
+    return TextFormField(
+        style: AppAnother.textStyleDefault(
+            AppDimens.dimens_20, AppFont.normal, AppColor.blackColor),
+        onChanged: (value) {
+          funtion(value);
+        },
+        validator: (value) {
+         
+          return errorText(value!);
         },
         cursorColor: AppColor.blackColor,
         maxLines: 1,
